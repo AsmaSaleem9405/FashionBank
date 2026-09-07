@@ -5,6 +5,7 @@ import Navbar from '@/app/components/Navbar';
 import Hero from '@/app/Hero/page';
 import Collections from '@/app/collections/page';
 import About from '@/app/about/page';
+import Contact from '@/app/contactus/page';
 
 import Footer from '@/app/components/footer'; // 1. Import the footer component
 
@@ -22,6 +23,7 @@ export default function Page() {
         <Hero />
         <Collections />
         <About />
+        <Contact />
         <Footer />
       </div>
       
