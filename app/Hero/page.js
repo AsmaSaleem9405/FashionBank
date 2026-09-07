@@ -3,7 +3,8 @@ import Link from 'next/link';
 
 export default function Hero() {
   return (
-    <div className="relative min-h-[calc(100vh-6rem)] flex items-center overflow-hidden">
+    <section id="home">
+    <div  className="relative min-h-[calc(100vh-6rem)] flex items-center overflow-hidden">
       
       {/* Full Screen Background Image with Wave */}
       <div className="absolute inset-0 z-0">
@@ -76,5 +77,6 @@ export default function Hero() {
 
       </div>
     </div>
+    </section>
   );
 }

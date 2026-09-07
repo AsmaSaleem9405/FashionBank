@@ -17,12 +17,20 @@ export default function ContactPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const mailtoLink = `mailto:Fashionbankstitching@gmail.com?subject=New Contact from ${formData.name}&body=Name: ${formData.name}%0D%0AEmail: ${formData.email}%0D%0APhone: ${formData.phone}%0D%0AMessage: ${formData.message}`;
-    window.location.href = mailtoLink;
+    const recipient = "Fashionbankstitching@gmail.com";
+    const subject = encodeURIComponent(`New Inquiry from ${formData.name}`);
+    const body = encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\n\nMessage:\n${formData.message}`);
+    
+    window.location.href = `mailto:${recipient}?subject=${subject}&body=${body}`;
+
+    setTimeout(() => {
+      const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${recipient}&su=${subject}&body=${body}`;
+      window.open(gmailUrl, '_blank');
+    }, 500);
   };
 
   return (
-    <main className="min-h-screen w-full relative overflow-x-hidden bg-gradient-to-br from-[#fdfbf7] via-[#f7f2ea] to-[#f3eadc] text-gray-900 py-16 px-4 md:px-16">
+    <main id="contact" className="min-h-screen w-full relative overflow-x-hidden bg-gradient-to-br from-[#fdfbf7] via-[#f7f2ea] to-[#f3eadc] text-gray-900 py-16 px-4 md:px-16">
 
       {/* Subtle Background Glows */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
@@ -47,7 +55,7 @@ export default function ContactPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
           
-          {/* Left Side: Contact Form linking to email */}
+          {/* Left Side: Contact Form */}
           <div className="bg-white/90 backdrop-blur-md border border-amber-900/10 p-8 rounded-2xl shadow-sm">
             <h2 className="text-2xl font-serif font-bold text-gray-900 mb-6">
               Send Us a Message
@@ -150,9 +158,11 @@ export default function ContactPage() {
                   </div>
                 </a>
 
-                {/* Email Link */}
+                {/* Email Link formatted with Gmail Web Compose */}
                 <a
-                  href="mailto:Fashionbankstitching@gmail.com"
+                  href="https://mail.google.com/mail/?view=cm&fs=1&to=Fashionbankstitching@gmail.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="flex items-center space-x-4 p-4 rounded-xl border border-gray-100 hover:border-amber-300 hover:bg-amber-50/50 transition-all group"
                 >
                   <div className="p-3 bg-amber-100 rounded-full text-amber-700 group-hover:scale-105 transition-transform">
@@ -160,7 +170,9 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="text-xs font-semibold uppercase tracking-wider text-gray-400">Email Us</h3>
-                    <p className="text-gray-900 font-medium text-sm">Fashionbankstitching@gmail.com</p>
+                    <span className="text-gray-900 font-medium text-sm transition-all duration-300 group-hover:text-amber-700 group-hover:underline">
+                      Fashionbankstitching@gmail.com
+                    </span>
                   </div>
                 </a>
 

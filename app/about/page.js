@@ -56,7 +56,7 @@ export default function AboutPage() {
   };
 
   return (
-    <main className="min-h-screen w-full relative overflow-x-hidden bg-[#fdfbf7] text-gray-900">
+    <main id="about" className="min-h-screen w-full relative overflow-x-hidden bg-[#fdfbf7] text-gray-900">
 
       {/* Clean & Subtle Professional Background Accent */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">

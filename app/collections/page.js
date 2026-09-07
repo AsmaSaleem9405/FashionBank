@@ -83,7 +83,7 @@ export const collectionsData = [
 
 export default function CollectionsPage() {
   return (
-    <section className="bg-[#FDFBF7] text-[#2C1810] py-12 px-4 sm:px-6 lg:px-8">
+    <section id="collections" className="bg-[#FDFBF7] text-[#2C1810] py-12 px-4 sm:px-6 lg:px-8">
       {/* Header Section */}
       <div className="text-center max-w-3xl mx-auto mb-12">
         <div className="inline-flex items-center space-x-2 text-xs sm:text-sm font-bold tracking-widest text-[#D9822B] uppercase mb-2">
