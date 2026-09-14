@@ -102,7 +102,7 @@ const Navbar = () => {
                 key={link.name}
                 href={link.href}
                 onClick={() => setActiveSection(link.id)}
-                className="relative py-2 text-sm font-medium tracking-wide text-[#3d1815] hover:opacity-85 transition-opacity"
+                className="relative py-2 text-sm font-semibold tracking-wide text-[#3d1815] hover:opacity-85 transition-opacity"
               >
                 {link.name}
                 {/* Active Indicator Line */}
@@ -119,7 +119,7 @@ const Navbar = () => {
           <Link
             href="/#contact"
             onClick={() => setActiveSection('contact')}
-            className="flex items-center gap-2 bg-[#3d1815] text-white px-6 py-3 rounded-full text-sm font-medium tracking-wide hover:bg-[#52221e] transition-colors shadow-sm"
+            className="flex items-center gap-2 bg-[#3d1815] text-white px-6 py-3 rounded-full text-sm font-semibold tracking-wide hover:bg-[#52221e] transition-colors shadow-sm"
           >
             <span>GET IN TOUCH</span>
             <svg
@@ -142,7 +142,7 @@ const Navbar = () => {
         {/* Mobile Menu Button (Hamburger) */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden text-[#3d1815] focus:outline-none"
+          className="md:hidden text-[#3d1815] focus:outline-none z-50 relative"
           aria-label="Toggle Menu"
         >
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -155,40 +155,74 @@ const Navbar = () => {
         </button>
       </div>
 
-      {/* Mobile Dropdown Menu */}
+      {/* Full-Screen Mobile Overlay Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 w-full bg-[#fdfbf7]/95 backdrop-blur-md shadow-lg border-t border-[#3d1815]/10 px-6 py-5 flex flex-col space-y-4">
-          {navLinks.map((link) => {
-            const isActive = activeSection === link.id;
-            return (
-              <Link
-                key={link.name}
-                href={link.href}
-                onClick={() => {
-                  setActiveSection(link.id);
-                  setMobileMenuOpen(false);
-                }}
-                className={`text-sm font-medium tracking-wide py-2 text-[#3d1815] relative w-fit ${
-                  isActive ? 'font-semibold' : ''
-                }`}
-              >
-                {link.name}
-                {isActive && (
-                  <span className="absolute bottom-1 left-0 w-6 h-[2px] bg-orange-400 rounded-full" />
-                )}
-              </Link>
-            );
-          })}
-          <Link
-            href="/#contact"
-            onClick={() => {
-              setActiveSection('contact');
-              setMobileMenuOpen(false);
-            }}
-            className="flex items-center justify-center gap-2 bg-[#3d1815] text-white px-6 py-3 rounded-full text-sm font-medium tracking-wide hover:bg-[#52221e] transition-colors shadow-sm w-full text-center"
-          >
-            <span>GET IN TOUCH</span>
-          </Link>
+        <div className="md:hidden fixed inset-0 h-screen w-screen bg-[#fdfbf7] z-40 px-6 py-5 flex flex-col justify-start overflow-y-auto">
+          {/* Top header row inside overlay to match navbar height/spacing */}
+          <div className="flex items-center justify-between w-full">
+            <Link 
+              href="/#home" 
+              onClick={() => {
+                setActiveSection('home');
+                setMobileMenuOpen(false);
+              }}
+              className="flex items-center gap-3"
+            >
+              <div className="relative w-12 h-12 flex-shrink-0">
+                <Image
+                  src="/images/logo.png" 
+                  alt="Fashion Bank Logo"
+                  fill
+                  className="object-contain rounded-full"
+                  priority
+                />
+              </div>
+              <span className="font-serif tracking-wider text-lg font-bold text-[#3d1815]">
+                FASHION BANK
+              </span>
+            </Link>
+            {/* Empty space placeholder for balanced flex spacing with close button */}
+            <div className="w-6" />
+          </div>
+
+          {/* Navigation Links starting from top */}
+          <div className="flex flex-col space-y-6 mt-10">
+            {navLinks.map((link) => {
+              const isActive = activeSection === link.id;
+              return (
+                <Link
+                  key={link.name}
+                  href={link.href}
+                  onClick={() => {
+                    setActiveSection(link.id);
+                    setMobileMenuOpen(false);
+                  }}
+                  className={`text-xl font-semibold tracking-wide py-2 text-[#3d1815] relative w-fit ${
+                    isActive ? 'text-opacity-100' : ''
+                  }`}
+                >
+                  {link.name}
+                  {isActive && (
+                    <span className="absolute bottom-1 left-0 w-8 h-[2px] bg-orange-400 rounded-full" />
+                  )}
+                </Link>
+              );
+            })}
+          </div>
+
+          {/* CTA Button placed below navigation links */}
+          <div className="mt-8">
+            <Link
+              href="/#contact"
+              onClick={() => {
+                setActiveSection('contact');
+                setMobileMenuOpen(false);
+              }}
+              className="flex items-center justify-center gap-2 bg-[#3d1815] text-white px-6 py-4 rounded-full text-sm font-semibold tracking-wide hover:bg-[#52221e] transition-colors shadow-sm w-full text-center"
+            >
+              <span>GET IN TOUCH</span>
+            </Link>
+          </div>
         </div>
       )}
     </header>

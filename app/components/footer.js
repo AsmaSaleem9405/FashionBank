@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image'; // 1. Import Next.js Image component
+import Image from 'next/image';
 import { MessageCircle, Mail } from 'lucide-react';
 
 export default function Footer() {
@@ -11,10 +11,9 @@ export default function Footer() {
         {/* Column 1: Brand Info */}
         <div className="flex flex-col items-start space-y-4">
           <div className="flex items-center space-x-3">
-            {/* 2. Replaced fallback span with Next.js Image */}
-            <div className="relative w-22 h-22 ">
+            <div className="relative w-22 h-22">
               <Image
-                src="/images/logo.png" // Path relative to the public folder
+                src="/images/logo.png"
                 alt="Fashion Bank Logo"
                 fill
                 className="object-cover"
@@ -32,62 +31,53 @@ export default function Footer() {
         {/* Divider for Desktop */}
         <div className="hidden md:block absolute left-1/3 top-4 bottom-4 w-[1px] bg-amber-600/40"></div>
 
-        {/* Column 2: Quick Links */}
-        <div className="flex flex-col space-y-3 md:pl-12">
-          <h3 className="text-amber-500 font-semibold tracking-wider text-sm mb-2">
-            QUICK LINKS
-          </h3>
-          <ul className="space-y-2 text-sm text-gray-300">
-            <li>
-              <Link href="/" className="hover:text-amber-400 transition-colors">
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link href="/collections" className="hover:text-amber-400 transition-colors">
-                Collections
-              </Link>
-            </li>
-            <li>
-              <Link href="/about" className="hover:text-amber-400 transition-colors">
-                About Us
-              </Link>
-            </li>
-            <li>
-              <Link href="/contact" className="hover:text-amber-400 transition-colors">
-                Contact Us
-              </Link>
-            </li>
-          </ul>
+        {/* Column 2: Quick Links & Info (Same-page smooth scroll) */}
+        <div className="flex flex-col space-y-6 md:pl-12">
+          <div>
+            <h3 className="text-amber-500 font-semibold tracking-wider text-sm mb-3">
+              QUICK LINKS
+            </h3>
+            <ul className="grid grid-cols-2 gap-2 text-sm text-gray-300">
+              <li>
+                <Link href="#home" className="hover:text-amber-400 transition-colors">
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link href="#collections" className="hover:text-amber-400 transition-colors">
+                  Collections
+                </Link>
+              </li>
+              <li>
+                <Link href="#about" className="hover:text-amber-400 transition-colors">
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link href="#contact" className="hover:text-amber-400 transition-colors">
+                  Contact Us
+                </Link>
+              </li>
+            </ul>
+          </div>
+          
+          <div className="text-sm text-gray-300 space-y-1 pt-2 border-t border-[#3d1c19]">
+            <p className="text-amber-100 font-medium">Business Hours:</p>
+            <p className="text-xs text-gray-400">Mon - Sat: 9:00 AM - 7:00 PM</p>
+          </div>
         </div>
 
         {/* Divider for Desktop */}
         <div className="hidden md:block absolute left-2/3 top-4 bottom-4 w-[1px] bg-amber-600/40"></div>
 
-        {/* Column 3: Follow Us */}
+        {/* Column 3: Follow Us (Direct Social Links) */}
         <div className="flex flex-col space-y-4 md:pl-12">
           <h3 className="text-amber-500 font-semibold tracking-wider text-sm">
             FOLLOW US
           </h3>
           <div className="flex items-center space-x-4 pt-1">
             <a
-              href="https://whatsapp.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-10 h-10 rounded-full border border-amber-500 flex items-center justify-center text-white hover:bg-amber-500 hover:text-[#24110f] transition-all"
-              aria-label="WhatsApp"
-            >
-              <MessageCircle size={18} />
-            </a>
-            <a
-              href="mailto:info@fashionbank.com"
-              className="w-10 h-10 rounded-full border border-amber-500 flex items-center justify-center text-white hover:bg-amber-500 hover:text-[#24110f] transition-all"
-              aria-label="Email"
-            >
-              <Mail size={18} />
-            </a>
-            <a
-              href="https://facebook.com"
+              href="https://www.facebook.com/share/12G61rEwGk9/"
               target="_blank"
               rel="noopener noreferrer"
               className="w-10 h-10 rounded-full border border-amber-500 flex items-center justify-center text-white hover:bg-amber-500 hover:text-[#24110f] transition-all"
@@ -98,7 +88,7 @@ export default function Footer() {
               </svg>
             </a>
             <a
-              href="https://instagram.com"
+              href="https://www.instagram.com/fashionbank.official/"
               target="_blank"
               rel="noopener noreferrer"
               className="w-10 h-10 rounded-full border border-amber-500 flex items-center justify-center text-white hover:bg-amber-500 hover:text-[#24110f] transition-all"
@@ -117,7 +107,7 @@ export default function Footer() {
 
       {/* Bottom Copyright Bar */}
       <div className="max-w-7xl mx-auto pt-8 border-t border-amber-600/20 text-center text-xs text-gray-400">
-        © 2025 <span className="text-amber-500 font-medium">FASHION BANK</span>. All Rights Reserved.
+        © 2026 <span className="text-amber-500 font-medium">FASHION BANK</span>. All Rights Reserved.
       </div>
     </footer>
   );

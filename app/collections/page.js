@@ -97,47 +97,48 @@ export default function CollectionsPage() {
       {/* Grid of 6 Collections */}
       <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {collectionsData.map((item) => (
-          <div 
+          <Link 
             key={item.id} 
-            className="bg-[#2D150C] rounded-2xl overflow-hidden shadow-xl flex flex-col justify-between group transition-transform duration-300 hover:-translate-y-1"
+            href={`/collections/${item.id}`}
+            className="group relative rounded-2xl overflow-hidden shadow-xl flex flex-col justify-end h-80 sm:h-96 w-full bg-stone-900 transition-transform duration-300 hover:-translate-y-1"
           >
-            {/* Image Container */}
-            <div className="relative h-72 sm:h-80 w-full overflow-hidden bg-stone-900">
+            {/* Background Image with Zoom */}
+            <div className="absolute inset-0">
               <Image 
                 src={item.image} 
                 alt={item.title} 
                 fill 
-                className="object-cover group-hover:scale-105 transition-transform duration-500" 
+                className="object-cover group-hover:scale-105 transition-transform duration-700" 
               />
             </div>
 
+            {/* Gradient Overlay for Legibility */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#2D150C] via-[#2D150C]/60 to-transparent opacity-90 group-hover:opacity-95 transition-opacity duration-300" />
+
             {/* Content & Action Box */}
-            <div className="p-6 flex items-center justify-between bg-[#2D150C]">
-              <div className="flex items-start space-x-4">
-                <span className="text-3xl sm:text-4xl font-black text-[#EFA93E] tracking-tighter">
+            <div className="relative z-10 p-6 flex items-center justify-between w-full">
+              <div className="flex items-start space-x-4 w-full">
+                <span className="text-3xl sm:text-4xl font-black text-[#EFA93E] tracking-tighter shrink-0">
                   {item.number}
                 </span>
-                <div>
+                <div className="flex-1">
                   <h3 className="text-white font-bold text-base sm:text-lg tracking-wide leading-snug">
                     {item.title}
                   </h3>
-                  <Link 
-                    href={`/collections/${item.id}`}
-                    className="mt-2 inline-flex items-center text-xs sm:text-sm font-semibold text-[#EFA93E] hover:text-white transition-colors"
-                  >
+                  <span className="mt-2 inline-flex items-center text-xs sm:text-sm font-semibold text-[#EFA93E] group-hover:text-white transition-colors">
                     <span>VIEW COLLECTION</span>
-                    <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
-                  </Link>
+                    <ArrowRight className="w-3.5 h-3.5 ml-1.5 transition-transform duration-300 group-hover:translate-x-1" />
+                  </span>
                 </div>
               </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
 
       {/* Bottom Features Banner */}
-      <div className="max-w-7xl mx-auto mt-16 bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-[#F0EBE1] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="flex items-start space-x-4">
+      <div className="max-w-7xl mx-auto mt-16 bg-[#FAF7F0] rounded-3xl p-6 sm:p-8 shadow-sm border border-[#EFECE6] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-[#EFECE6] gap-6 sm:gap-0">
+        <div className="flex items-start space-x-4 pt-4 sm:pt-0 sm:px-4 first:sm:pl-0 last:sm:pr-0">
           <div className="w-12 h-12 rounded-full bg-[#FEF6E8] flex items-center justify-center shrink-0">
             <Award className="w-6 h-6 text-[#D9822B]" />
           </div>
@@ -147,7 +148,7 @@ export default function CollectionsPage() {
           </div>
         </div>
 
-        <div className="flex items-start space-x-4">
+        <div className="flex items-start space-x-4 pt-4 sm:pt-0 sm:px-4">
           <div className="w-12 h-12 rounded-full bg-[#FEF6E8] flex items-center justify-center shrink-0">
             <Scissors className="w-6 h-6 text-[#D9822B]" />
           </div>
@@ -157,7 +158,7 @@ export default function CollectionsPage() {
           </div>
         </div>
 
-        <div className="flex items-start space-x-4">
+        <div className="flex items-start space-x-4 pt-4 sm:pt-0 sm:px-4">
           <div className="w-12 h-12 rounded-full bg-[#FEF6E8] flex items-center justify-center shrink-0">
             <Palette className="w-6 h-6 text-[#D9822B]" />
           </div>
@@ -167,7 +168,7 @@ export default function CollectionsPage() {
           </div>
         </div>
 
-        <div className="flex items-start space-x-4">
+        <div className="flex items-start space-x-4 pt-4 sm:pt-0 sm:px-4 first:sm:pl-0 last:sm:pr-0">
           <div className="w-12 h-12 rounded-full bg-[#FEF6E8] flex items-center justify-center shrink-0">
             <ShieldCheck className="w-6 h-6 text-[#D9822B]" />
           </div>
