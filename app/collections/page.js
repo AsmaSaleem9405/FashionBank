@@ -22,15 +22,15 @@ export const collectionsData = [
   {
     id: 'restaurant-uniforms',
     number: '02',
-    title: 'RESTAURANT UNIFORMS',
+    title: 'CHEFF UNIFORM',
     subtitle: 'COLLECTION 02',
     description: 'Durable, stylish kitchen and front-of-house wear built for high-paced culinary environments.',
-    image: '/images/restaurant-main.png',
+    image: '/images/8uni.png',
     gallery: [
-      { type: 'image', url: '/images/restaurant-main.png' },
-      { type: 'image', url: '/images/restaurant-1.png' },
-      { type: 'image', url: '/images/restaurant-2.png' },
-      { type: 'video', url: '/images/restaurant-video.mp4', poster: '/images/restaurant-video-poster.png' },
+      { type: 'image', url: '/images/8uni.png' },
+      { type: 'image', url: '/images/7uni.png' },
+      { type: 'image', url: '/images/6uni.png' },
+      { type: 'video', url: '/videos/cheffuni.mp4' },
     ]
   },
   {
