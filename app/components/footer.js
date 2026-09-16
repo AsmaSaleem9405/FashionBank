@@ -92,7 +92,7 @@ export default function Footer() {
             <motion.a
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
-              href="https://www.facebook.com/share/12G61rEwGk9/"
+              href="https://www.facebook.com/FashionBankStitching"
               target="_blank"
               rel="noopener noreferrer"
               className="w-10 h-10 rounded-full border border-amber-500 flex items-center justify-center text-white hover:bg-amber-500 hover:text-[#24110f] transition-all"
