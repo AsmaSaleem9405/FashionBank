@@ -227,13 +227,13 @@ export default function AboutPage() {
         </section>
 
         {/* Brand Philosophy Section */}
-        <section className="py-16 sm:py-20 px-5 sm:px-8 md:px-16 max-w-7xl mx-auto">
-         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-10 lg:gap-14 items-center">
-  
+       <section className="py-16 sm:py-20 px-5 sm:px-8 md:px-16 max-w-7xl mx-auto">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-10 lg:gap-14 items-center">
+ 
   <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden border border-amber-900/15 shadow-xl bg-gradient-to-br from-amber-50/80 via-white to-amber-100/40 p-5 sm:p-8 lg:p-10 flex flex-col justify-center min-h-[320px] sm:min-h-[360px] group">
     
     {/* Background pattern */}
-    <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#b45309_1.5px,transparent_1.5px)] [background-size:16px_16px sm:[background-size:20px_20px]"></div>
+    <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#b45309_1.5px,transparent_1.5px)] bg-[size:16px_16px] sm:bg-[size:20px_20px]"></div>
     
     {/* Badge */}
     <div className="absolute top-4 right-4 sm:top-6 sm:right-6 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full bg-amber-800 text-white text-[9px] sm:text-[10px] font-bold tracking-widest uppercase shadow-sm">
@@ -260,6 +260,7 @@ export default function AboutPage() {
     </div>
     
   </div>
+
 
 
             <div className="space-y-6">
