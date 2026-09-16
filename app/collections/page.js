@@ -36,40 +36,46 @@ export const collectionsData = [
   {
     id: 'corporate-uniforms',
     number: '03',
-    title: 'CORPORATE UNIFORMS',
+    title: 'CAFE UNIFORM',
     subtitle: 'COLLECTION 03',
     description: 'Sophisticated suits and formal office attire that project authority, trust, and elegance.',
-    image: '/images/corporate-main.png',
+    image: '/images/12uni.png',
     gallery: [
-      { type: 'image', url: '/images/corporate-main.png' },
-      { type: 'image', url: '/images/corporate-1.png' },
-      { type: 'image', url: '/images/corporate-2.png' },
+      { type: 'image', url: '/images/12uni.png' },
+       { type: 'image', url: '/images/9 uni.png' },
+      { type: 'image', url: '/images/11uni.png' },
+      { type: 'image', url: '/images/10uni.png' },
+        { type: 'video', url: '/videos/cafeuni.mp4' },
     ]
   },
   {
     id: 'pharmacy-uniforms',
     number: '04',
-    title: 'PHARMACY STAFF UNIFORMS',
+    title: 'FRONTDESK UNIFORM',
     subtitle: 'COLLECTION 04',
     description: 'Clean, professional medical lab coats and staff wear ensuring hygiene and comfort.',
-    image: '/images/pharmacy-main.png',
+    image: '/images/17uni.png',
     gallery: [
-      { type: 'image', url: '/images/pharmacy-main.png' },
-      { type: 'image', url: '/images/pharmacy-1.png' },
-      { type: 'image', url: '/images/pharmacy-2.png' },
+      { type: 'image', url: '/images/17uni.png' },
+      { type: 'image', url: '/images/13uni.png' },
+      { type: 'image', url: '/images/14uni.png' },
+      { type: 'image', url: '/images/16uni.png' },
+       { type: 'video', url: '/videos/frontuni.mp4' },
+    
     ]
   },
   {
     id: 'event-uniforms',
     number: '05',
-    title: 'EVENT MANAGEMENT UNIFORMS',
+    title: 'BELL BOY UNIFORM',
     subtitle: 'COLLECTION 05',
     description: 'Active and smart apparel tailored for coordinators, hosts, and hospitality staff on the move.',
-    image: '/images/event-main.png',
+    image: '/images/21uni.png',
     gallery: [
-      { type: 'image', url: '/images/event-main.png' },
-      { type: 'image', url: '/images/event-1.png' },
-      { type: 'image', url: '/images/event-2.png' },
+      { type: 'image', url: '/images/21uni.png' },
+      { type: 'image', url: '/images/20uni.png' },
+      { type: 'image', url: '/images/19uni.png' },
+       { type: 'video', url: '/videos/belluni.mp4' },
     ]
   },
   {
