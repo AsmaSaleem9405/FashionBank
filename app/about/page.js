@@ -227,7 +227,7 @@ export default function AboutPage() {
     <div className="flex items-center space-x-4 p-4 rounded-2xl transition-all duration-300 hover:bg-amber-50/60 group">
       <div className="p-2.5 bg-amber-100/90 rounded-2xl shadow-inner group-hover:scale-110 transition-transform overflow-hidden flex items-center justify-center w-14 h-14 shrink-0">
         <img 
-          src="/images/retention-icon.png" 
+          src="/images/costumer.png" 
           alt="Retention icon" 
           className="w-full h-full object-cover rounded-xl"
         />
