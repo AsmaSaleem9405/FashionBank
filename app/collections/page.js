@@ -1,7 +1,8 @@
 'use client';
-import React, { useEffect, useRef, Suspense } from 'react';
+import React, { useRef, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { ShieldCheck, Scissors, Palette, Award, ArrowRight } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export const collectionsData = [
   {
@@ -42,10 +43,10 @@ export const collectionsData = [
     image: '/images/12uni.png',
     gallery: [
       { type: 'image', url: '/images/12uni.png' },
-       { type: 'image', url: '/images/9 uni.png' },
+      { type: 'image', url: '/images/9 uni.png' },
       { type: 'image', url: '/images/11uni.png' },
       { type: 'image', url: '/images/10uni.png' },
-        { type: 'video', url: '/videos/cafeuni.mp4' },
+      { type: 'video', url: '/videos/cafeuni.mp4' },
     ]
   },
   {
@@ -60,8 +61,7 @@ export const collectionsData = [
       { type: 'image', url: '/images/13uni.png' },
       { type: 'image', url: '/images/14uni.png' },
       { type: 'image', url: '/images/16uni.png' },
-       { type: 'video', url: '/videos/frontuni.mp4' },
-    
+      { type: 'video', url: '/videos/frontuni.mp4' },
     ]
   },
   {
@@ -75,7 +75,7 @@ export const collectionsData = [
       { type: 'image', url: '/images/21uni.png' },
       { type: 'image', url: '/images/20uni.png' },
       { type: 'image', url: '/images/19uni.png' },
-       { type: 'video', url: '/videos/belluni.mp4' },
+      { type: 'video', url: '/videos/belluni.mp4' },
     ]
   },
   {
@@ -90,7 +90,7 @@ export const collectionsData = [
       { type: 'image', url: '/images/24uni.png' },
       { type: 'image', url: '/images/23uni.png' },
       { type: 'image', url: '/images/26uni.png' },
-       { type: 'video', url: '/videos/musicianuni.mp4' },
+      { type: 'video', url: '/videos/musicianuni.mp4' },
     ]
   },
 ];
@@ -101,7 +101,7 @@ function CollectionsContent() {
   const collectionsRef = useRef(null);
 
   // Automatically scroll down when returning from a detail page
-  useEffect(() => {
+  React.useEffect(() => {
     const shouldScroll = searchParams.get('scroll');
     if (shouldScroll === 'true' && collectionsRef.current) {
       collectionsRef.current.scrollIntoView({ behavior: 'smooth' });
@@ -113,57 +113,91 @@ function CollectionsContent() {
   };
 
   return (
-    <section ref={collectionsRef} id="collections" className="bg-[#FDFBF7] text-[#2C1810] py-12 px-4 sm:px-6 lg:px-8">
-      {/* Header Section */}
-      <div className="text-center max-w-3xl mx-auto mb-12">
-        <div className="inline-flex items-center space-x-2 text-xs sm:text-sm font-bold tracking-widest text-[#D9822B] uppercase mb-2">
+    <section ref={collectionsRef} id="collections" className="bg-[#FDFBF7] text-[#2C1810] py-16 px-4 sm:px-6 lg:px-8 overflow-hidden">
+      
+      {/* Header Section with Smooth Reveal */}
+      <motion.div 
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="text-center max-w-3xl mx-auto mb-14"
+      >
+        <div className="inline-flex items-center space-x-2 text-xs sm:text-sm font-bold tracking-widest text-[#D9822B] uppercase mb-3">
           <span>— OUR COLLECTIONS —</span>
         </div>
         <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#2C1810]">
           UNIFORMS FOR EVERY NEED
         </h2>
-      </div>
+      </motion.div>
 
-      {/* Grid of 6 Collections */}
-      <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      {/* Grid of 6 Collections with Staggered Entrance Animation */}
+      <motion.div 
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-50px" }}
+        variants={{
+          hidden: { opacity: 0 },
+          visible: {
+            opacity: 1,
+            transition: {
+              staggerChildren: 0.12,
+            },
+          },
+        }}
+        className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
+      >
         {collectionsData.map((item) => (
-          <div 
-            key={item.id} 
+          <motion.div 
+            key={item.id}
+            variants={{
+              hidden: { opacity: 0, y: 40 },
+              visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+            }}
             onClick={() => handleSelectCollection(item.id)}
-            className="group relative rounded-2xl overflow-hidden shadow-xl flex flex-col justify-end h-80 sm:h-96 w-full bg-stone-900 transition-transform duration-300 hover:-translate-y-1 cursor-pointer"
+            className="group relative rounded-2xl overflow-hidden shadow-xl flex flex-col justify-end h-72 sm:h-84 lg:h-96 w-full bg-stone-900 cursor-pointer"
           >
+            {/* Background Image with Zoom on Hover */}
             <div className="absolute inset-0">
               <img 
                 src={item.image} 
                 alt={item.title} 
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" 
               />
             </div>
 
+            {/* Gradient Overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-[#2D150C] via-[#2D150C]/60 to-transparent opacity-90 group-hover:opacity-95 transition-opacity duration-300" />
 
-            <div className="relative z-10 p-6 flex items-center justify-between w-full">
-              <div className="flex items-start space-x-4 w-full">
-                <span className="text-3xl sm:text-4xl font-black text-[#EFA93E] tracking-tighter shrink-0">
+            {/* Content info */}
+            <div className="relative z-10 p-5 sm:p-6 flex items-center justify-between w-full">
+              <div className="flex items-start space-x-3 sm:space-x-4 w-full">
+                <span className="text-2xl sm:text-4xl font-black text-[#EFA93E] tracking-tighter shrink-0">
                   {item.number}
                 </span>
                 <div className="flex-1">
-                  <h3 className="text-white font-bold text-base sm:text-lg tracking-wide leading-snug">
+                  <h3 className="text-white font-bold text-sm sm:text-base lg:text-lg tracking-wide leading-snug">
                     {item.title}
                   </h3>
-                  <span className="mt-2 inline-flex items-center text-xs sm:text-sm font-semibold text-[#EFA93E] group-hover:text-white transition-colors">
+                  <span className="mt-1.5 inline-flex items-center text-xs sm:text-sm font-semibold text-[#EFA93E] group-hover:text-white transition-colors">
                     <span>VIEW COLLECTION</span>
-                    <ArrowRight className="w-3.5 h-3.5 ml-1.5 transition-transform duration-300 group-hover:translate-x-1" />
+                    <ArrowRight className="w-3.5 h-3.5 ml-1.5 transition-transform duration-300 group-hover:translate-x-1.5" />
                   </span>
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
 
-      {/* Bottom Features Banner */}
-      <div className="max-w-7xl mx-auto mt-16 bg-[#FAF7F0] rounded-3xl p-6 sm:p-8 shadow-sm border border-[#EFECE6] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-[#EFECE6] gap-6 sm:gap-0">
+      {/* Bottom Features Banner with Smooth Fade-up */}
+      <motion.div 
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-50px" }}
+        transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+        className="max-w-7xl mx-auto mt-16 bg-[#FAF7F0] rounded-3xl p-6 sm:p-8 shadow-sm border border-[#EFECE6] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-[#EFECE6] gap-6 sm:gap-0"
+      >
         <div className="flex items-start space-x-4 pt-4 sm:pt-0 sm:px-4 first:sm:pl-0 last:sm:pr-0">
           <div className="w-12 h-12 rounded-full bg-[#FEF6E8] flex items-center justify-center shrink-0">
             <Award className="w-6 h-6 text-[#D9822B]" />
@@ -203,7 +237,7 @@ function CollectionsContent() {
             <p className="text-xs text-stone-500 mt-1">Preferred by leading brands and professionals.</p>
           </div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }
