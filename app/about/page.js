@@ -228,27 +228,39 @@ export default function AboutPage() {
 
         {/* Brand Philosophy Section */}
         <section className="py-16 sm:py-20 px-5 sm:px-8 md:px-16 max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
-            
-            <div className="relative rounded-3xl overflow-hidden border border-amber-900/15 shadow-xl bg-gradient-to-br from-amber-50/80 via-white to-amber-100/40 p-8 sm:p-10 flex flex-col justify-center min-h-[360px] group">
-              <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#b45309_1.5px,transparent_1.5px)] [background-size:20px_20px]"></div>
-              
-              <div className="absolute top-6 right-6 px-3 py-1 rounded-full bg-amber-800 text-white text-[10px] font-bold tracking-widest uppercase shadow-sm">
-                Industrial Hub
-              </div>
+         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-10 lg:gap-14 items-center">
+  
+  <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden border border-amber-900/15 shadow-xl bg-gradient-to-br from-amber-50/80 via-white to-amber-100/40 p-5 sm:p-8 lg:p-10 flex flex-col justify-center min-h-[320px] sm:min-h-[360px] group">
+    
+    {/* Background pattern */}
+    <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#b45309_1.5px,transparent_1.5px)] [background-size:16px_16px sm:[background-size:20px_20px]"></div>
+    
+    {/* Badge */}
+    <div className="absolute top-4 right-4 sm:top-6 sm:right-6 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full bg-amber-800 text-white text-[9px] sm:text-[10px] font-bold tracking-widest uppercase shadow-sm">
+      Industrial Hub
+    </div>
 
-              <div className="relative z-10">
-                <span className="text-xs tracking-widest font-bold uppercase text-amber-800 mb-2 block">Our Master Workshop</span>
-                <h3 className="text-2xl sm:text-3xl font-serif font-bold text-gray-900 mb-4 group-hover:text-amber-900 transition-colors">Precision in Every Thread</h3>
-                <p className="text-sm sm:text-base text-gray-600 leading-relaxed mb-6">
-                  Operating out of our state-of-the-art industrial production facility in Faisalabad, our expert craftsmen merge traditional tailoring mastery with advanced automated precision sewing technology.
-                </p>
-                <div className="flex items-center space-x-3 text-xs font-semibold text-amber-800 bg-amber-100/60 w-fit px-4 py-2 rounded-xl border border-amber-200/50">
-                  <ShieldCheck size={16} />
-                  <span>ISO-Standard Quality Checked Fabric Batches</span>
-                </div>
-              </div>
-            </div>
+    {/* Content */}
+    <div className="relative z-10 pr-12 sm:pr-0">
+      <span className="text-[11px] sm:text-xs tracking-widest font-bold uppercase text-amber-800 mb-1.5 sm:mb-2 block">
+        Our Master Workshop
+      </span>
+      <h3 className="text-xl sm:text-2xl lg:text-3xl font-serif font-bold text-gray-900 mb-3 sm:mb-4 group-hover:text-amber-900 transition-colors">
+        Precision in Every Thread
+      </h3>
+      <p className="text-xs sm:text-sm lg:text-base text-gray-600 leading-relaxed mb-4 sm:mb-6">
+        Operating out of our state-of-the-art industrial production facility in Faisalabad, our expert craftsmen merge traditional tailoring mastery with advanced automated precision sewing technology.
+      </p>
+      
+      {/* Feature pill */}
+      <div className="flex items-center space-x-2 sm:space-x-3 text-[11px] sm:text-xs font-semibold text-amber-800 bg-amber-100/60 w-full sm:w-fit px-3.5 py-2.5 sm:px-4 sm:py-2 rounded-xl border border-amber-200/50">
+        <ShieldCheck size={15} className="shrink-0" />
+        <span className="leading-tight">ISO-Standard Quality Checked Fabric Batches</span>
+      </div>
+    </div>
+    
+  </div>
+
 
             <div className="space-y-6">
               <div>
