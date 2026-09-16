@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { Award, PackageCheck, Handshake, Star, Building2, Utensils, Briefcase, Hotel } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Award, PackageCheck, Handshake, Star, Building2, Utensils, Briefcase, Hotel, ShieldCheck } from 'lucide-react';
 
 const testimonials = [
   {
@@ -37,25 +37,107 @@ const testimonials = [
 ];
 
 const clientIndustries = [
-  { name: "Serena Hotels", icon: Hotel },
-  { name: "Rosecliff Marquee", icon: Utensils },
-  { name: "Chenab Club", icon: Building2 },
-  { name: "Paradise Marquee", icon: Briefcase }
+  { name: "Serena Hotels", icon: Hotel, category: "Luxury Hospitality" },
+  { name: "Rosecliff Marquee", icon: Utensils, category: "Event & Banqueting" },
+  { name: "Chenab Club", icon: Building2, category: "Corporate & Recreation" },
+  { name: "Paradise Marquee", icon: Briefcase, category: "Premium Hospitality" },
+  { name: "Pearl Continental Staff", icon: Hotel, category: "Hospitality Partner" },
+  { name: "Sarena Banquet Suites", icon: Utensils, category: "Catering & Events" }
 ];
+
+function useCounter(end, duration = 2000, shouldStart = false) {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (!shouldStart) return;
+
+    let startTime = null;
+    let animationFrameId;
+
+    const updateCount = (timestamp) => {
+      if (!startTime) startTime = timestamp;
+      const progress = timestamp - startTime;
+      const percentage = Math.min(progress / duration, 1);
+      
+      // Ease out expo formula for smooth counting deceleration
+      const easeProgress = percentage === 1 ? 1 : 1 - Math.pow(2, -10 * percentage);
+      
+      setCount(Math.floor(easeProgress * end));
+
+      if (percentage < 1) {
+        animationFrameId = requestAnimationFrame(updateCount);
+      }
+    };
+
+    animationFrameId = requestAnimationFrame(updateCount);
+
+    return () => cancelAnimationFrame(animationFrameId);
+  }, [end, duration, shouldStart]);
+
+  return count;
+}
 
 export default function AboutPage() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+  const [visibleCardsCount, setVisibleCardsCount] = useState(3);
+  const [hasStartedCounting, setHasStartedCounting] = useState(false);
 
+  const statsRef = useRef(null);
+
+  // Counter values
+  const countYears = useCounter(25, 2000, hasStartedCounting);
+  const countDeliveries = useCounter(500, 2000, hasStartedCounting);
+  const countRetention = useCounter(99, 2000, hasStartedCounting);
+
+  // Trigger entry animations and intersection observer for stats counting
+  useEffect(() => {
+    const timer = setTimeout(() => setIsVisible(true), 100);
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setHasStartedCounting(true);
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    if (statsRef.current) {
+      observer.observe(statsRef.current);
+    }
+
+    return () => {
+      clearTimeout(timer);
+      if (statsRef.current) observer.unobserve(statsRef.current);
+    };
+  }, []);
+
+  // Handle automatic testimonial rotation
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % testimonials.length);
-    }, 4000);
+    }, 4500);
     return () => clearInterval(timer);
   }, []);
 
-  const getVisibleTestimonials = () => {
+  // Responsive testimonial count calculation
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setVisibleCardsCount(1);
+      } else {
+        setVisibleCardsCount(3);
+      }
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const getResponsiveTestimonials = () => {
     const visible = [];
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < visibleCardsCount; i++) {
       const index = (currentIndex + i) % testimonials.length;
       visible.push(testimonials[index]);
     }
@@ -63,102 +145,138 @@ export default function AboutPage() {
   };
 
   return (
-    <main id="about" className="min-h-screen w-full relative overflow-x-hidden bg-[#fdfbf7] text-gray-900">
+    <main id="about" className="min-h-screen w-full relative overflow-x-hidden bg-[#fdfbf7] text-gray-900 selection:bg-amber-200 selection:text-amber-900">
 
-      {/* Clean & Subtle Professional Background Accent */}
+      {/* Custom CSS for Marquee animation */}
+      <style>{`
+        @keyframes marquee {
+          0% { transform: translateX(0%); }
+          100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+          display: flex;
+          width: max-content;
+          animation: marquee 25s linear infinite;
+        }
+        .animate-marquee:hover {
+          animation-play-state: paused;
+        }
+      `}</style>
+
+      {/* Clean background without glowing decorative shapes */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-gradient-to-b from-amber-100/30 to-transparent blur-2xl"></div>
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[400px] bg-gradient-to-b from-amber-50/50 to-transparent"></div>
       </div>
 
       <div className="relative z-10">
-        {/* Hero / Header Section */}
-        <section className="pt-24 pb-16 px-4 md:px-16 max-w-7xl mx-auto text-center">
-          <span className="text-amber-700 font-semibold tracking-widest text-xs uppercase mb-3 block">
-            EST. 1997 | FAISALABAD
-          </span>
-          <h1 className="text-4xl md:text-5xl font-serif font-bold tracking-tight text-gray-900 mb-6">
-            A PARTNER YOU CAN RELY ON.
+        
+        {/* Hero / Header Section without shining stars */}
+        <section className={`pt-20 pb-12 px-5 sm:px-8 md:px-16 max-w-7xl mx-auto text-center transition-all duration-1000 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+          <div className="inline-block px-4 py-1.5 rounded-full bg-amber-100/70 border border-amber-200 text-amber-800 text-xs font-bold tracking-widest uppercase mb-4 shadow-sm">
+            EST. 1997 | FAISALABAD, PAKISTAN
+          </div>
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-serif font-bold tracking-tight text-gray-900 mb-6 leading-tight">
+            A PARTNER YOU CAN <span className="text-amber-800 underline decoration-amber-300 decoration-1 underline-offset-8">RELY ON.</span>
           </h1>
-          <p className="text-gray-600 max-w-2xl mx-auto text-base md:text-lg leading-relaxed">
-            Since 1997, Fashion Bank has been creating professional uniforms for hotels, restaurants & businesses with over 25 years of stitching excellence.
+          <p className="text-gray-600 max-w-2xl mx-auto text-base sm:text-lg leading-relaxed">
+            Since 1997, Fashion Bank has been engineering professional uniforms for premier hotels, restaurants & corporate enterprises with over 25 years of stitching mastery.
           </p>
         </section>
 
-        {/* Core Highlights / Stats Bar with Enlarged Numeric Hierarchy */}
-        <section className="py-12 px-4 md:px-16 max-w-7xl mx-auto border-y border-amber-900/10 my-4 bg-white/60 shadow-sm backdrop-blur-sm">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+        {/* Core Highlights / Stats Bar with Number Counting Animation */}
+        <section ref={statsRef} className="py-8 px-4 sm:px-8 md:px-16 max-w-7xl mx-auto my-2">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 bg-white/90 backdrop-blur-md border border-amber-900/10 rounded-3xl p-6 sm:p-8 shadow-xl shadow-amber-900/[0.03]">
             
-            <div className="flex items-center justify-center md:justify-start space-x-5 p-4">
-              <div className="p-3.5 bg-amber-100/80 rounded-2xl text-amber-800 shadow-inner">
-                <Award size={32} />
+            <div className="flex items-center space-x-4 p-4 rounded-2xl transition-all duration-300 hover:bg-amber-50/60 group">
+              <div className="p-4 bg-amber-100/90 rounded-2xl text-amber-800 shadow-inner group-hover:scale-110 transition-transform">
+                <Award size={28} />
               </div>
               <div>
-                <h3 className="text-3xl md:text-4xl font-serif font-extrabold text-gray-900 tracking-tight">25+</h3>
-                <p className="text-sm font-medium text-gray-500 mt-0.5">Years Experience in Stitching</p>
+                <h3 className="text-3xl sm:text-4xl font-serif font-extrabold text-gray-900 tracking-tight">
+                  {countYears}+
+                </h3>
+                <p className="text-xs sm:text-sm font-medium text-gray-500 mt-0.5">Years Experience in Stitching</p>
               </div>
             </div>
 
-            <div className="flex items-center justify-center md:justify-start space-x-5 p-4">
-              <div className="p-3.5 bg-amber-100/80 rounded-2xl text-amber-800 shadow-inner">
-                <PackageCheck size={32} />
+            <div className="flex items-center space-x-4 p-4 rounded-2xl transition-all duration-300 hover:bg-amber-50/60 group border-y sm:border-y-0 sm:border-x border-amber-950/5">
+              <div className="p-4 bg-amber-100/90 rounded-2xl text-amber-800 shadow-inner group-hover:scale-110 transition-transform">
+                <PackageCheck size={28} />
               </div>
               <div>
-                <h3 className="text-3xl md:text-4xl font-serif font-extrabold text-gray-900 tracking-tight">500k+</h3>
-                <p className="text-sm font-medium text-gray-500 mt-0.5">Bulk Uniforms Delivered</p>
+                <h3 className="text-3xl sm:text-4xl font-serif font-extrabold text-gray-900 tracking-tight">
+                  {countDeliveries}k+
+                </h3>
+                <p className="text-xs sm:text-sm font-medium text-gray-500 mt-0.5">Bulk Uniforms Delivered</p>
               </div>
             </div>
 
-            <div className="flex items-center justify-center md:justify-start space-x-5 p-4">
-              <div className="p-3.5 bg-amber-100/80 rounded-2xl text-amber-800 shadow-inner">
-                <Handshake size={32} />
+            <div className="flex items-center space-x-4 p-4 rounded-2xl transition-all duration-300 hover:bg-amber-50/60 group">
+              <div className="p-4 bg-amber-100/90 rounded-2xl text-amber-800 shadow-inner group-hover:scale-110 transition-transform">
+                <Handshake size={28} />
               </div>
               <div>
-                <h3 className="text-3xl md:text-4xl font-serif font-extrabold text-gray-900 tracking-tight">99%</h3>
-                <p className="text-sm font-medium text-gray-500 mt-0.5">Client Retention Rate</p>
+                <h3 className="text-3xl sm:text-4xl font-serif font-extrabold text-gray-900 tracking-tight">
+                  {countRetention}%
+                </h3>
+                <p className="text-xs sm:text-sm font-medium text-gray-500 mt-0.5">Client Retention Rate</p>
               </div>
             </div>
 
           </div>
         </section>
 
-        {/* Brand Philosophy Section (2-Column Layout) */}
-        <section className="py-20 px-4 md:px-16 max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        {/* Brand Philosophy Section */}
+        <section className="py-16 sm:py-20 px-5 sm:px-8 md:px-16 max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
             
-            {/* Visual Workshop Imagery Side */}
-            <div className="relative rounded-2xl overflow-hidden border border-amber-900/10 shadow-lg bg-amber-50/50 p-8 flex flex-col justify-center min-h-[340px]">
-              <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#b45309_1px,transparent_1px)] [background-size:16px_16px]"></div>
-              <span className="text-xs tracking-widest font-bold uppercase text-amber-800 mb-2">Our Master Workshop</span>
-              <h3 className="text-2xl font-serif font-bold text-gray-900 mb-4">Precision in Every Thread</h3>
-              <p className="text-sm text-gray-600 leading-relaxed">
-                Operating out of our industrial hub in Faisalabad, our production lines merge traditional tailoring mastery with automated precision sewing technology.
-              </p>
+            <div className="relative rounded-3xl overflow-hidden border border-amber-900/15 shadow-xl bg-gradient-to-br from-amber-50/80 via-white to-amber-100/40 p-8 sm:p-10 flex flex-col justify-center min-h-[360px] group">
+              <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#b45309_1.5px,transparent_1.5px)] [background-size:20px_20px]"></div>
+              
+              <div className="absolute top-6 right-6 px-3 py-1 rounded-full bg-amber-800 text-white text-[10px] font-bold tracking-widest uppercase shadow-sm">
+                Industrial Hub
+              </div>
+
+              <div className="relative z-10">
+                <span className="text-xs tracking-widest font-bold uppercase text-amber-800 mb-2 block">Our Master Workshop</span>
+                <h3 className="text-2xl sm:text-3xl font-serif font-bold text-gray-900 mb-4 group-hover:text-amber-900 transition-colors">Precision in Every Thread</h3>
+                <p className="text-sm sm:text-base text-gray-600 leading-relaxed mb-6">
+                  Operating out of our state-of-the-art industrial production facility in Faisalabad, our expert craftsmen merge traditional tailoring mastery with advanced automated precision sewing technology.
+                </p>
+                <div className="flex items-center space-x-3 text-xs font-semibold text-amber-800 bg-amber-100/60 w-fit px-4 py-2 rounded-xl border border-amber-200/50">
+                  <ShieldCheck size={16} />
+                  <span>ISO-Standard Quality Checked Fabric Batches</span>
+                </div>
+              </div>
             </div>
 
-            {/* Text & Pillars Side */}
-            <div>
-              <h2 className="text-2xl md:text-3xl font-serif font-bold text-amber-900 mb-3">
-                YOUR TEAM. YOUR BRAND. OUR CRAFT.
-              </h2>
-              <p className="text-gray-500 italic mb-6 text-sm">
-                &ldquo;Experience built stitch by stitch.&rdquo;
-              </p>
-              <p className="text-gray-600 leading-relaxed text-base mb-8 max-w-xl">
-                At Fashion Bank, we understand that uniforms are more than just workwear—they are an extension of your corporate identity. Our master artisans ensure every garment reflects peak professionalism, durability, and tailored style.
+            <div className="space-y-6">
+              <div>
+                <span className="text-xs font-bold text-amber-700 tracking-widest uppercase block mb-2">Built On Trust & Excellence</span>
+                <h2 className="text-2xl sm:text-4xl font-serif font-bold text-gray-900 tracking-tight leading-snug">
+                  YOUR TEAM. YOUR BRAND. OUR CRAFT.
+                </h2>
+                <p className="text-amber-800/80 italic mt-1 text-sm font-medium">
+                  &ldquo;Experience built stitch by stitch since 1997.&rdquo;
+                </p>
+              </div>
+
+              <p className="text-gray-600 leading-relaxed text-base">
+                At Fashion Bank, we recognize that staff uniforms represent more than standard workwear—they serve as a core visual extension of your corporate identity. Our master artisans ensure absolute comfort, durability, and distinguished styling.
               </p>
 
-              <ul className="space-y-3 text-sm font-medium text-gray-700">
-                <li className="flex items-center space-x-3">
-                  <span className="h-1.5 w-1.5 rounded-full bg-amber-700"></span>
-                  <span>Customized industrial fabric sourcing (fade and tear resistant)</span>
+              <ul className="space-y-3.5 text-sm font-medium text-gray-700 pt-2">
+                <li className="flex items-center space-x-3.5 bg-white/70 p-3 rounded-2xl border border-amber-900/5 shadow-sm">
+                  <span className="h-2 w-2 rounded-full bg-amber-700 shrink-0"></span>
+                  <span>Customized industrial fabric sourcing (fade & tear resistant weaves)</span>
                 </li>
-                <li className="flex items-center space-x-3">
-                  <span className="h-1.5 w-1.5 rounded-full bg-amber-700"></span>
-                  <span>Precision automated bulk grading and sizing routines</span>
+                <li className="flex items-center space-x-3.5 bg-white/70 p-3 rounded-2xl border border-amber-900/5 shadow-sm">
+                  <span className="h-2 w-2 rounded-full bg-amber-700 shrink-0"></span>
+                  <span>Precision automated bulk grading and sizing routines for all staff tiers</span>
                 </li>
-                <li className="flex items-center space-x-3">
-                  <span className="h-1.5 w-1.5 rounded-full bg-amber-700"></span>
-                  <span>In-house corporate branding, embroidery, and logo cresting</span>
+                <li className="flex items-center space-x-3.5 bg-white/70 p-3 rounded-2xl border border-amber-900/5 shadow-sm">
+                  <span className="h-2 w-2 rounded-full bg-amber-700 shrink-0"></span>
+                  <span>In-house high definition corporate branding, embroidery, and logo cresting</span>
                 </li>
               </ul>
             </div>
@@ -166,17 +284,33 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Client Trust Verification (Logo/Industry Carousel Strip) */}
-        <section className="py-8 bg-amber-900/[0.02] border-y border-amber-900/10">
-          <div className="max-w-7xl mx-auto px-4 md:px-16 text-center">
-            <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-6">Trusted across Pakistan&apos;s leading sectors</p>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 items-center">
-              {clientIndustries.map((ind, i) => {
+        {/* INFINITE MARQUEE MOVING ANIMATION FOR CLIENT INDUSTRIES */}
+        <section className="py-12 bg-amber-950/[0.02] border-y border-amber-900/10 overflow-hidden my-6">
+          <div className="max-w-7xl mx-auto px-4 md:px-16 text-center mb-6">
+            <p className="text-xs font-bold text-gray-500 uppercase tracking-widest">
+              Trusted across Pakistan&apos;s leading hospitality & corporate sectors
+            </p>
+          </div>
+
+          <div className="relative w-full overflow-hidden py-3">
+            <div className="absolute left-0 inset-y-0 w-20 bg-gradient-to-r from-[#fdfbf7] to-transparent z-10 pointer-events-none"></div>
+            <div className="absolute right-0 inset-y-0 w-20 bg-gradient-to-l from-[#fdfbf7] to-transparent z-10 pointer-events-none"></div>
+
+            <div className="animate-marquee flex items-center space-x-8 sm:space-x-12">
+              {[...clientIndustries, ...clientIndustries, ...clientIndustries].map((ind, i) => {
                 const IconComponent = ind.icon;
                 return (
-                  <div key={i} className="flex items-center justify-center space-x-2 text-gray-600 grayscale hover:grayscale-0 transition-all py-2">
-                    <IconComponent size={20} className="text-amber-700" />
-                    <span className="font-medium text-sm">{ind.name}</span>
+                  <div 
+                    key={i} 
+                    className="flex items-center space-x-3 bg-white border border-amber-900/10 px-6 py-3.5 rounded-2xl shadow-sm shrink-0 hover:border-amber-700 hover:shadow-md transition-all group cursor-pointer"
+                  >
+                    <div className="p-2 rounded-xl bg-amber-100 text-amber-800 group-hover:scale-110 transition-transform">
+                      <IconComponent size={20} />
+                    </div>
+                    <div>
+                      <span className="font-bold text-gray-900 text-sm block tracking-tight">{ind.name}</span>
+                      <span className="text-[11px] text-amber-700 font-medium block">{ind.category}</span>
+                    </div>
                   </div>
                 );
               })}
@@ -184,53 +318,58 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Testimonials Section - Clean 3 Boxes Rotating with High Contrast */}
-        <section className="py-20 px-4 md:px-16 max-w-7xl mx-auto mb-20">
+        {/* Testimonials Section */}
+        <section className="py-16 sm:py-20 px-5 sm:px-8 md:px-16 max-w-7xl mx-auto mb-16">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-serif font-bold text-gray-900">
-              TRUSTED BY BUSINESSES
+            <span className="text-amber-700 text-xs font-bold tracking-widest uppercase mb-2 block">Client Testimonials & Feedback</span>
+            <h2 className="text-3xl sm:text-4xl font-serif font-bold text-gray-900 tracking-tight">
+              TRUSTED BY BUSINESS LEADERS
             </h2>
-            <p className="text-amber-700 text-xs mt-2 tracking-widest uppercase font-semibold">Client Testimonials</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 transition-all duration-700">
-            {getVisibleTestimonials().map((item, idx) => (
+            {getResponsiveTestimonials().map((item, idx) => (
               <div 
                 key={`${currentIndex}-${idx}`}
-                className="bg-white border border-neutral-200/80 p-8 rounded-2xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] flex flex-col justify-between transition-all duration-500 hover:shadow-md hover:border-amber-900/20"
+                className="bg-white border border-neutral-200/80 p-6 sm:p-8 rounded-3xl shadow-[0_10px_30px_-10px_rgba(0,0,0,0.06)] flex flex-col justify-between transition-all duration-500 hover:shadow-xl hover:border-amber-900/30 hover:-translate-y-1"
               >
                 <div>
-                  <div className="flex text-amber-500 mb-4 space-x-0.5">
+                  <div className="flex text-amber-500 mb-4 space-x-1">
                     {[...Array(5)].map((_, i) => (
-                      <Star key={i} size={15} fill="currentColor" />
+                      <Star key={i} size={16} fill="currentColor" />
                     ))}
                   </div>
-                  <p className="text-gray-700 italic text-sm mb-6 leading-relaxed">
+                  <p className="text-gray-700 italic text-sm sm:text-base mb-6 leading-relaxed">
                     &ldquo;{item.quote}&rdquo;
                   </p>
                 </div>
-                <div className="border-t border-neutral-100 pt-4 mt-2">
-                  <h4 className="font-bold text-gray-900 text-sm">{item.name}</h4>
-                  <p className="text-xs text-amber-700 font-medium">{item.location}, Pakistan</p>
+                <div className="border-t border-neutral-100 pt-4 mt-2 flex items-center justify-between">
+                  <div>
+                    <h4 className="font-bold text-gray-900 text-sm sm:text-base">{item.name}</h4>
+                    <p className="text-xs text-amber-700 font-semibold">{item.location}, Pakistan</p>
+                  </div>
+                  <div className="w-8 h-8 rounded-full bg-amber-50 flex items-center justify-center text-amber-800 text-xs font-bold border border-amber-200">
+                    {item.name.charAt(0)}
+                  </div>
                 </div>
               </div>
             ))}
           </div>
 
-          {/* Clean Dots Indicator */}
-          <div className="flex justify-center space-x-2 mt-10">
+          <div className="flex justify-center items-center space-x-2.5 mt-10">
             {testimonials.map((_, index) => (
               <button
                 key={index}
                 onClick={() => setCurrentIndex(index)}
-                className={`h-2 rounded-full transition-all ${
-                  currentIndex === index ? 'bg-amber-700 w-6' : 'bg-gray-300 w-2'
+                className={`h-2.5 rounded-full transition-all duration-300 ${
+                  currentIndex === index ? 'bg-amber-800 w-8 shadow-sm' : 'bg-gray-300 w-2.5 hover:bg-gray-400'
                 }`}
                 aria-label={`Go to slide ${index + 1}`}
               />
             ))}
           </div>
         </section>
+
       </div>
 
     </main>
