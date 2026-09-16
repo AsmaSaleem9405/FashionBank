@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 
 export const collectionsData = [
   {
-    id: 'hotel-uniforms',
+    id: 'waiter-Uniform',
     number: '01',
     title: 'WAITER UNIFORM',
     subtitle: 'COLLECTION 01',
@@ -21,7 +21,7 @@ export const collectionsData = [
     ]
   },
   {
-    id: 'restaurant-uniforms',
+    id: 'cheff-uniform',
     number: '02',
     title: 'CHEFF UNIFORM',
     subtitle: 'COLLECTION 02',
@@ -35,7 +35,7 @@ export const collectionsData = [
     ]
   },
   {
-    id: 'corporate-uniforms',
+    id: 'cafe-uniform',
     number: '03',
     title: 'CAFE UNIFORM',
     subtitle: 'COLLECTION 03',
@@ -50,7 +50,7 @@ export const collectionsData = [
     ]
   },
   {
-    id: 'pharmacy-uniforms',
+    id: 'frontdesk-uniform',
     number: '04',
     title: 'FRONTDESK UNIFORM',
     subtitle: 'COLLECTION 04',
@@ -65,7 +65,7 @@ export const collectionsData = [
     ]
   },
   {
-    id: 'event-uniforms',
+    id: 'bellboy-uniform',
     number: '05',
     title: 'BELL BOY UNIFORM',
     subtitle: 'COLLECTION 05',
@@ -79,7 +79,7 @@ export const collectionsData = [
     ]
   },
   {
-    id: 'custom-uniforms',
+    id: 'musician-uniform',
     number: '06',
     title: 'MUSICIAN UNIFORM',
     subtitle: 'COLLECTION 06',
