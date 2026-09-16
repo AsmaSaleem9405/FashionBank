@@ -81,14 +81,16 @@ export const collectionsData = [
   {
     id: 'custom-uniforms',
     number: '06',
-    title: 'CUSTOM UNIFORMS',
+    title: 'MUSICIAN UNIFORM',
     subtitle: 'COLLECTION 06',
     description: 'Fully personalized uniform solutions crafted precisely to your brand guidelines and style choices.',
-    image: '/images/custom-main.png',
+    image: '/images/25uni.png',
     gallery: [
-      { type: 'image', url: '/images/custom-main.png' },
-      { type: 'image', url: '/images/custom-1.png' },
-      { type: 'image', url: '/images/custom-2.png' },
+      { type: 'image', url: '/images/25uni.png' },
+      { type: 'image', url: '/images/24uni.png' },
+      { type: 'image', url: '/images/23uni.png' },
+      { type: 'image', url: '/images/26uni.png' },
+       { type: 'video', url: '/videos/musicianuni.mp4' },
     ]
   },
 ];

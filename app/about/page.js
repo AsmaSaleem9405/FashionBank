@@ -37,10 +37,10 @@ const testimonials = [
 ];
 
 const clientIndustries = [
-  { name: "Serena & Pearl Hotels", icon: Hotel },
-  { name: "Cinnabon & Kolachi", icon: Utensils },
-  { name: "Nishat & Sapphire Staff", icon: Building2 },
-  { name: "Metro & Imtiaz Logistics", icon: Briefcase }
+  { name: "Serena Hotels", icon: Hotel },
+  { name: "Rosecliff Marquee", icon: Utensils },
+  { name: "Chenab Club", icon: Building2 },
+  { name: "Paradise Marquee", icon: Briefcase }
 ];
 
 export default function AboutPage() {
