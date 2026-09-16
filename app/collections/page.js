@@ -1,21 +1,22 @@
-import React from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { ArrowRight, Award, Scissors, Palette, ShieldCheck } from 'lucide-react';
+'use client';
+import React, { useEffect, useRef, Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { ShieldCheck, Scissors, Palette, Award, ArrowRight } from 'lucide-react';
 
 export const collectionsData = [
   {
     id: 'hotel-uniforms',
     number: '01',
-    title: 'HOTEL UNIFORMS',
+    title: 'WAITER UNIFORM',
     subtitle: 'COLLECTION 01',
     description: 'Professional, comfortable uniforms designed to give your hotel team a polished and consistent appearance.',
-    image: '/images/hotel-uniform.jpg',
+    image: '/images/1uni.png',
     gallery: [
-      '/images/hotel-uniform.jpg',
-      '/images/hotel-detail-1.jpg',
-      '/images/hotel-detail-2.jpg',
-      '/images/hotel-detail-3.jpg',
+      { type: 'image', url: '/images/1uni.png' },
+      { type: 'image', url: '/images/2uni.png' },
+      { type: 'image', url: '/images/4uni.png' },
+      { type: 'image', url: '/images/3uni.png' },
+      { type: 'video', url: '/videos/reduni.mp4', poster: '/images/hotel-video-poster.png' },
     ]
   },
   {
@@ -24,11 +25,12 @@ export const collectionsData = [
     title: 'RESTAURANT UNIFORMS',
     subtitle: 'COLLECTION 02',
     description: 'Durable, stylish kitchen and front-of-house wear built for high-paced culinary environments.',
-    image: '/images/restaurant-uniform.jpg',
+    image: '/images/restaurant-main.png',
     gallery: [
-      '/images/restaurant-uniform.jpg',
-      '/images/rest-detail-1.jpg',
-      '/images/rest-detail-2.jpg',
+      { type: 'image', url: '/images/restaurant-main.png' },
+      { type: 'image', url: '/images/restaurant-1.png' },
+      { type: 'image', url: '/images/restaurant-2.png' },
+      { type: 'video', url: '/images/restaurant-video.mp4', poster: '/images/restaurant-video-poster.png' },
     ]
   },
   {
@@ -37,10 +39,11 @@ export const collectionsData = [
     title: 'CORPORATE UNIFORMS',
     subtitle: 'COLLECTION 03',
     description: 'Sophisticated suits and formal office attire that project authority, trust, and elegance.',
-    image: '/images/corporate-uniform.jpg',
+    image: '/images/corporate-main.png',
     gallery: [
-      '/images/corporate-uniform.jpg',
-      '/images/corp-detail-1.jpg',
+      { type: 'image', url: '/images/corporate-main.png' },
+      { type: 'image', url: '/images/corporate-1.png' },
+      { type: 'image', url: '/images/corporate-2.png' },
     ]
   },
   {
@@ -49,10 +52,11 @@ export const collectionsData = [
     title: 'PHARMACY STAFF UNIFORMS',
     subtitle: 'COLLECTION 04',
     description: 'Clean, professional medical lab coats and staff wear ensuring hygiene and comfort.',
-    image: '/images/pharmacy-uniform.jpg',
+    image: '/images/pharmacy-main.png',
     gallery: [
-      '/images/pharmacy-uniform.jpg',
-      '/images/pharm-detail-1.jpg',
+      { type: 'image', url: '/images/pharmacy-main.png' },
+      { type: 'image', url: '/images/pharmacy-1.png' },
+      { type: 'image', url: '/images/pharmacy-2.png' },
     ]
   },
   {
@@ -61,10 +65,11 @@ export const collectionsData = [
     title: 'EVENT MANAGEMENT UNIFORMS',
     subtitle: 'COLLECTION 05',
     description: 'Active and smart apparel tailored for coordinators, hosts, and hospitality staff on the move.',
-    image: '/images/event-uniform.jpg',
+    image: '/images/event-main.png',
     gallery: [
-      '/images/event-uniform.jpg',
-      '/images/event-detail-1.jpg',
+      { type: 'image', url: '/images/event-main.png' },
+      { type: 'image', url: '/images/event-1.png' },
+      { type: 'image', url: '/images/event-2.png' },
     ]
   },
   {
@@ -73,17 +78,34 @@ export const collectionsData = [
     title: 'CUSTOM UNIFORMS',
     subtitle: 'COLLECTION 06',
     description: 'Fully personalized uniform solutions crafted precisely to your brand guidelines and style choices.',
-    image: '/images/custom-uniform.jpg',
+    image: '/images/custom-main.png',
     gallery: [
-      '/images/custom-uniform.jpg',
-      '/images/custom-detail-1.jpg',
+      { type: 'image', url: '/images/custom-main.png' },
+      { type: 'image', url: '/images/custom-1.png' },
+      { type: 'image', url: '/images/custom-2.png' },
     ]
   },
 ];
 
-export default function CollectionsPage() {
+function CollectionsContent() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const collectionsRef = useRef(null);
+
+  // Automatically scroll down when returning from a detail page
+  useEffect(() => {
+    const shouldScroll = searchParams.get('scroll');
+    if (shouldScroll === 'true' && collectionsRef.current) {
+      collectionsRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [searchParams]);
+
+  const handleSelectCollection = (id) => {
+    router.push(`/collections/${id}`);
+  };
+
   return (
-    <section id="collections" className="bg-[#FDFBF7] text-[#2C1810] py-12 px-4 sm:px-6 lg:px-8">
+    <section ref={collectionsRef} id="collections" className="bg-[#FDFBF7] text-[#2C1810] py-12 px-4 sm:px-6 lg:px-8">
       {/* Header Section */}
       <div className="text-center max-w-3xl mx-auto mb-12">
         <div className="inline-flex items-center space-x-2 text-xs sm:text-sm font-bold tracking-widest text-[#D9822B] uppercase mb-2">
@@ -97,25 +119,21 @@ export default function CollectionsPage() {
       {/* Grid of 6 Collections */}
       <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {collectionsData.map((item) => (
-          <Link 
+          <div 
             key={item.id} 
-            href={`/collections/${item.id}`}
-            className="group relative rounded-2xl overflow-hidden shadow-xl flex flex-col justify-end h-80 sm:h-96 w-full bg-stone-900 transition-transform duration-300 hover:-translate-y-1"
+            onClick={() => handleSelectCollection(item.id)}
+            className="group relative rounded-2xl overflow-hidden shadow-xl flex flex-col justify-end h-80 sm:h-96 w-full bg-stone-900 transition-transform duration-300 hover:-translate-y-1 cursor-pointer"
           >
-            {/* Background Image with Zoom */}
             <div className="absolute inset-0">
-              <Image 
+              <img 
                 src={item.image} 
                 alt={item.title} 
-                fill 
-                className="object-cover group-hover:scale-105 transition-transform duration-700" 
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
               />
             </div>
 
-            {/* Gradient Overlay for Legibility */}
             <div className="absolute inset-0 bg-gradient-to-t from-[#2D150C] via-[#2D150C]/60 to-transparent opacity-90 group-hover:opacity-95 transition-opacity duration-300" />
 
-            {/* Content & Action Box */}
             <div className="relative z-10 p-6 flex items-center justify-between w-full">
               <div className="flex items-start space-x-4 w-full">
                 <span className="text-3xl sm:text-4xl font-black text-[#EFA93E] tracking-tighter shrink-0">
@@ -132,7 +150,7 @@ export default function CollectionsPage() {
                 </div>
               </div>
             </div>
-          </Link>
+          </div>
         ))}
       </div>
 
@@ -179,5 +197,13 @@ export default function CollectionsPage() {
         </div>
       </div>
     </section>
+  );
+}
+
+export default function CollectionsPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-[#FDFBF7]" />}>
+      <CollectionsContent />
+    </Suspense>
   );
 }
