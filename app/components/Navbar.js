@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -23,7 +24,7 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Intersection Observer to update active navigation link based on scroll position
+  // Intersection Observer to update active navigation link
   useEffect(() => {
     const sections = ['home', 'collections', 'about', 'contact'];
     
@@ -64,10 +65,13 @@ const Navbar = () => {
   ];
 
   return (
-    <header
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+    <motion.header
+      initial={{ y: -100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
         isScrolled
-          ? 'bg-[#fdfbf7]/80 backdrop-blur-md shadow-md py-3'
+          ? 'bg-[#fdfbf7]/85 backdrop-blur-md shadow-lg py-3 border-b border-[#3d1815]/5'
           : 'bg-[#fdfbf7] py-5'
       }`}
     >
@@ -79,7 +83,11 @@ const Navbar = () => {
           onClick={() => setActiveSection('home')}
           className="flex items-center gap-3 group"
         >
-          <div className="relative w-12 h-12 md:w-14 md:h-14 flex-shrink-0">
+          <motion.div 
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="relative w-12 h-12 md:w-14 md:h-14 flex-shrink-0"
+          >
             <Image
               src="/images/logo.png" 
               alt="Fashion Bank Logo"
@@ -87,8 +95,8 @@ const Navbar = () => {
               className="object-contain rounded-full"
               priority
             />
-          </div>
-          <span className="font-serif tracking-wider text-lg md:text-xl font-bold text-[#3d1815]">
+          </motion.div>
+          <span className="font-serif tracking-wider text-lg md:text-xl font-bold text-[#3d1815] group-hover:text-orange-600 transition-colors duration-300">
             FASHION BANK
           </span>
         </Link>
@@ -102,12 +110,16 @@ const Navbar = () => {
                 key={link.name}
                 href={link.href}
                 onClick={() => setActiveSection(link.id)}
-                className="relative py-2 text-sm font-semibold tracking-wide text-[#3d1815] hover:opacity-85 transition-opacity"
+                className="relative py-2 text-sm font-semibold tracking-wide text-[#3d1815] hover:text-orange-600 transition-colors duration-300"
               >
                 {link.name}
-                {/* Active Indicator Line */}
+                {/* Active Indicator Line with Layout Animation */}
                 {isActive && (
-                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-6 h-[2px] bg-orange-400 rounded-full transition-all duration-300" />
+                  <motion.span
+                    layoutId="activeIndicator"
+                    className="absolute bottom-0 left-1/2 -translate-x-1/2 w-6 h-[2px] bg-orange-400 rounded-full"
+                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                  />
                 )}
               </Link>
             );
@@ -116,33 +128,36 @@ const Navbar = () => {
 
         {/* Call to Action Button (Desktop) */}
         <div className="hidden md:block">
-          <Link
-            href="/#contact"
-            onClick={() => setActiveSection('contact')}
-            className="flex items-center gap-2 bg-[#3d1815] text-white px-6 py-3 rounded-full text-sm font-semibold tracking-wide hover:bg-[#52221e] transition-colors shadow-sm"
-          >
-            <span>GET IN TOUCH</span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={2}
-              stroke="currentColor"
-              className="w-4 h-4"
+          <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
+            <Link
+              href="/#contact"
+              onClick={() => setActiveSection('contact')}
+              className="flex items-center gap-2 bg-[#3d1815] text-white px-6 py-3 rounded-full text-sm font-semibold tracking-wide hover:bg-[#52221e] transition-all shadow-md hover:shadow-orange-500/10"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
-              />
-            </svg>
-          </Link>
+              <span>GET IN TOUCH</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={2}
+                stroke="currentColor"
+                className="w-4 h-4"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
+                />
+              </svg>
+            </Link>
+          </motion.div>
         </div>
 
         {/* Mobile Menu Button (Hamburger) */}
-        <button
+        <motion.button
+          whileTap={{ scale: 0.9 }}
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden text-[#3d1815] focus:outline-none z-50 relative"
+          className="md:hidden text-[#3d1815] focus:outline-none z-50 relative p-2"
           aria-label="Toggle Menu"
         >
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -152,80 +167,116 @@ const Navbar = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
             )}
           </svg>
-        </button>
+        </motion.button>
       </div>
 
-      {/* Full-Screen Mobile Overlay Menu */}
-      {mobileMenuOpen && (
-        <div className="md:hidden fixed inset-0 h-screen w-screen bg-[#fdfbf7] z-40 px-6 py-5 flex flex-col justify-start overflow-y-auto">
-          {/* Top header row inside overlay to match navbar height/spacing */}
-          <div className="flex items-center justify-between w-full">
-            <Link 
-              href="/#home" 
-              onClick={() => {
-                setActiveSection('home');
-                setMobileMenuOpen(false);
-              }}
-              className="flex items-center gap-3"
-            >
-              <div className="relative w-12 h-12 flex-shrink-0">
-                <Image
-                  src="/images/logo.png" 
-                  alt="Fashion Bank Logo"
-                  fill
-                  className="object-contain rounded-full"
-                  priority
-                />
-              </div>
-              <span className="font-serif tracking-wider text-lg font-bold text-[#3d1815]">
-                FASHION BANK
-              </span>
-            </Link>
-            {/* Empty space placeholder for balanced flex spacing with close button */}
-            <div className="w-6" />
-          </div>
+      {/* Full-Screen Animated Mobile Overlay Menu */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: '-100%' }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: '-100%' }}
+            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            className="md:hidden fixed inset-0 h-screen w-screen bg-[#fdfbf7] z-40 px-6 py-5 flex flex-col justify-start overflow-y-auto"
+          >
+            {/* Top header row inside overlay */}
+            <div className="flex items-center justify-between w-full">
+              <Link 
+                href="/#home" 
+                onClick={() => {
+                  setActiveSection('home');
+                  setMobileMenuOpen(false);
+                }}
+                className="flex items-center gap-3"
+              >
+                <div className="relative w-12 h-12 flex-shrink-0">
+                  <Image
+                    src="/images/logo.png" 
+                    alt="Fashion Bank Logo"
+                    fill
+                    className="object-contain rounded-full"
+                    priority
+                  />
+                </div>
+                <span className="font-serif tracking-wider text-lg font-bold text-[#3d1815]">
+                  FASHION BANK
+                </span>
+              </Link>
+              <div className="w-6" />
+            </div>
 
-          {/* Navigation Links starting from top */}
-          <div className="flex flex-col space-y-6 mt-10">
-            {navLinks.map((link) => {
-              const isActive = activeSection === link.id;
-              return (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  onClick={() => {
-                    setActiveSection(link.id);
-                    setMobileMenuOpen(false);
-                  }}
-                  className={`text-xl font-semibold tracking-wide py-2 text-[#3d1815] relative w-fit ${
-                    isActive ? 'text-opacity-100' : ''
-                  }`}
-                >
-                  {link.name}
-                  {isActive && (
-                    <span className="absolute bottom-1 left-0 w-8 h-[2px] bg-orange-400 rounded-full" />
-                  )}
-                </Link>
-              );
-            })}
-          </div>
-
-          {/* CTA Button placed below navigation links */}
-          <div className="mt-8">
-            <Link
-              href="/#contact"
-              onClick={() => {
-                setActiveSection('contact');
-                setMobileMenuOpen(false);
+            {/* Navigation Links with Staggered Entrance */}
+            <motion.div 
+              initial="hidden"
+              animate="show"
+              variants={{
+                hidden: { opacity: 0 },
+                show: {
+                  opacity: 1,
+                  transition: {
+                    staggerChildren: 0.1,
+                    delayChildren: 0.2,
+                  },
+                },
               }}
-              className="flex items-center justify-center gap-2 bg-[#3d1815] text-white px-6 py-4 rounded-full text-sm font-semibold tracking-wide hover:bg-[#52221e] transition-colors shadow-sm w-full text-center"
+              className="flex flex-col space-y-6 mt-12"
             >
-              <span>GET IN TOUCH</span>
-            </Link>
-          </div>
-        </div>
-      )}
-    </header>
+              {navLinks.map((link) => {
+                const isActive = activeSection === link.id;
+                return (
+                  <motion.div
+                    key={link.name}
+                    variants={{
+                      hidden: { opacity: 0, x: -20 },
+                      show: { opacity: 1, x: 0 },
+                    }}
+                  >
+                    <Link
+                      href={link.href}
+                      onClick={() => {
+                        setActiveSection(link.id);
+                        setMobileMenuOpen(false);
+                      }}
+                      className={`text-2xl font-serif tracking-wide py-2 text-[#3d1815] relative w-fit block ${
+                        isActive ? 'text-orange-600 font-bold' : ''
+                      }`}
+                    >
+                      {link.name}
+                      {isActive && (
+                        <motion.span 
+                          layoutId="mobileActiveIndicator"
+                          className="absolute bottom-1 left-0 w-10 h-[2px] bg-orange-400 rounded-full" 
+                        />
+                      )}
+                    </Link>
+                  </motion.div>
+                );
+              })}
+            </motion.div>
+
+            {/* CTA Button placed below navigation links */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.4 }}
+              className="mt-10"
+            >
+              <Link
+                href="/#contact"
+                onClick={() => {
+                  setActiveSection('contact');
+                  setMobileMenuOpen(false);
+                }}
+                className="flex items-center justify-center gap-2 bg-[#3d1815] text-white px-6 py-4 rounded-full text-sm font-semibold tracking-wide hover:bg-[#52221e] transition-colors shadow-md w-full text-center"
+              >
+                <span>GET IN TOUCH</span>
+              </Link>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.header>
   );
 };
 
