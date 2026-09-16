@@ -1,4 +1,4 @@
-'import client'; // If using Next.js App Router with client-side interactivity
+'use client'; // Fixed: changed from 'import client' to 'use client'
 
 import Image from 'next/image';
 import Link from 'next/link';
