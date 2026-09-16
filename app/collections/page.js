@@ -95,6 +95,55 @@ export const collectionsData = [
   },
 ];
 
+const features = [
+  {
+    icon: Award,
+    title: 'PREMIUM QUALITY',
+    description: 'Top grade fabrics chosen for comfort and lasting durability.',
+    tag: 'Grade A',
+  },
+  {
+    icon: Scissors,
+    title: 'TAILORED FIT',
+    description: 'Expert stitching ensures a smart, professional appearance.',
+    tag: 'Precision',
+  },
+  {
+    icon: Palette,
+    title: 'CUSTOM DESIGN',
+    description: 'Fully personalize colors, branding, and style to match needs.',
+    tag: 'Bespoke',
+  },
+  {
+    icon: ShieldCheck,
+    title: 'TRUSTED BY EXPERTS',
+    description: 'Preferred choice for leading brands and industry professionals.',
+    tag: 'Verified',
+  },
+];
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+    },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: [0.22, 1, 0.36, 1],
+    },
+  },
+};
+
 function CollectionsContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -190,54 +239,47 @@ function CollectionsContent() {
         ))}
       </motion.div>
 
-      {/* Bottom Features Banner with Smooth Fade-up */}
+      {/* Modernized Bottom Features Cards Section */}
       <motion.div 
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
         viewport={{ once: true, margin: "-50px" }}
-        transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-        className="max-w-7xl mx-auto mt-16 bg-[#FAF7F0] rounded-3xl p-6 sm:p-8 shadow-sm border border-[#EFECE6] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-[#EFECE6] gap-6 sm:gap-0"
+        className="max-w-7xl mx-auto mt-12 sm:mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6"
       >
-        <div className="flex items-start space-x-4 pt-4 sm:pt-0 sm:px-4 first:sm:pl-0 last:sm:pr-0">
-          <div className="w-12 h-12 rounded-full bg-[#FEF6E8] flex items-center justify-center shrink-0">
-            <Award className="w-6 h-6 text-[#D9822B]" />
-          </div>
-          <div>
-            <h4 className="font-bold text-sm text-[#2C1810]">PREMIUM QUALITY</h4>
-            <p className="text-xs text-stone-500 mt-1">Top grade fabrics for comfort and durability.</p>
-          </div>
-        </div>
+        {features.map((feature, idx) => {
+          const IconComponent = feature.icon;
+          return (
+            <motion.div 
+              key={idx}
+              variants={cardVariants}
+              className="group relative bg-[#FAF7F0] rounded-2xl p-5 sm:p-6 border border-[#EFECE6] hover:border-[#D9822B]/40 hover:bg-white shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between overflow-hidden"
+            >
+              {/* Top Accent Line on Hover */}
+              <div className="absolute top-0 left-0 right-0 h-1 bg-[#D9822B] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-        <div className="flex items-start space-x-4 pt-4 sm:pt-0 sm:px-4">
-          <div className="w-12 h-12 rounded-full bg-[#FEF6E8] flex items-center justify-center shrink-0">
-            <Scissors className="w-6 h-6 text-[#D9822B]" />
-          </div>
-          <div>
-            <h4 className="font-bold text-sm text-[#2C1810]">TAILORED FIT</h4>
-            <p className="text-xs text-stone-500 mt-1">Perfect stitching for a smart and professional look.</p>
-          </div>
-        </div>
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="w-12 h-12 rounded-xl bg-[#FEF6E8] group-hover:bg-[#D9822B] flex items-center justify-center shrink-0 transition-colors duration-300 shadow-xs">
+                    <IconComponent className="w-6 h-6 text-[#D9822B] group-hover:text-white transition-colors duration-300" />
+                  </div>
+                  <span className="text-[10px] uppercase font-bold tracking-widest text-[#D9822B] bg-[#FEF6E8] px-2.5 py-1 rounded-full border border-[#D9822B]/20">
+                    {feature.tag}
+                  </span>
+                </div>
 
-        <div className="flex items-start space-x-4 pt-4 sm:pt-0 sm:px-4">
-          <div className="w-12 h-12 rounded-full bg-[#FEF6E8] flex items-center justify-center shrink-0">
-            <Palette className="w-6 h-6 text-[#D9822B]" />
-          </div>
-          <div>
-            <h4 className="font-bold text-sm text-[#2C1810]">CUSTOM DESIGN</h4>
-            <p className="text-xs text-stone-500 mt-1">Customize colors, logo and style as you need.</p>
-          </div>
-        </div>
-
-        <div className="flex items-start space-x-4 pt-4 sm:pt-0 sm:px-4 first:sm:pl-0 last:sm:pr-0">
-          <div className="w-12 h-12 rounded-full bg-[#FEF6E8] flex items-center justify-center shrink-0">
-            <ShieldCheck className="w-6 h-6 text-[#D9822B]" />
-          </div>
-          <div>
-            <h4 className="font-bold text-sm text-[#2C1810]">TRUSTED BY EXPERTS</h4>
-            <p className="text-xs text-stone-500 mt-1">Preferred by leading brands and professionals.</p>
-          </div>
-        </div>
+                <h4 className="font-bold text-sm tracking-wide text-[#2C1810] group-hover:text-[#D9822B] transition-colors">
+                  {feature.title}
+                </h4>
+                <p className="text-xs text-stone-500 mt-1.5 leading-relaxed">
+                  {feature.description}
+                </p>
+              </div>
+            </motion.div>
+          );
+        })}
       </motion.div>
+
     </section>
   );
 }
