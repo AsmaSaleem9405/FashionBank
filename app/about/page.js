@@ -85,10 +85,11 @@ export default function AboutPage() {
 
   const statsRef = useRef(null);
 
-  // Counter values
+  // Counter values (including countDesigns)
   const countYears = useCounter(25, 2000, hasStartedCounting);
   const countDeliveries = useCounter(500, 2000, hasStartedCounting);
   const countRetention = useCounter(99, 2000, hasStartedCounting);
+  const countDesigns = useCounter(500, 2000, hasStartedCounting); // Added counter hook
 
   // Trigger entry animations and intersection observer for stats counting
   useEffect(() => {
@@ -183,120 +184,64 @@ export default function AboutPage() {
           </p>
         </section>
 
-        {/* Core Highlights / Stats Bar with Number Counting Animation */}
-        <section ref={statsRef} className="py-8 px-4 sm:px-8 md:px-16 max-w-7xl mx-auto my-2">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 bg-white/90 backdrop-blur-md border border-amber-900/10 rounded-3xl p-6 sm:p-8 shadow-xl shadow-amber-900/[0.03]">
-            
-            <div className="flex items-center space-x-4 p-4 rounded-2xl transition-all duration-300 hover:bg-amber-50/60 group">
-              <div className="p-4 bg-amber-100/90 rounded-2xl text-amber-800 shadow-inner group-hover:scale-110 transition-transform">
-                <Award size={28} />
-              </div>
-              <div>
-                <h3 className="text-3xl sm:text-4xl font-serif font-extrabold text-gray-900 tracking-tight">
-                  {countYears}+
-                </h3>
-                <p className="text-xs sm:text-sm font-medium text-gray-500 mt-0.5">Years Experience in Stitching</p>
-              </div>
-            </div>
-
-            <div className="flex items-center space-x-4 p-4 rounded-2xl transition-all duration-300 hover:bg-amber-50/60 group border-y sm:border-y-0 sm:border-x border-amber-950/5">
-              <div className="p-4 bg-amber-100/90 rounded-2xl text-amber-800 shadow-inner group-hover:scale-110 transition-transform">
-                <PackageCheck size={28} />
-              </div>
-              <div>
-                <h3 className="text-3xl sm:text-4xl font-serif font-extrabold text-gray-900 tracking-tight">
-                  {countDeliveries}k+
-                </h3>
-                <p className="text-xs sm:text-sm font-medium text-gray-500 mt-0.5">Bulk Uniforms Delivered</p>
-              </div>
-            </div>
-
-            <div className="flex items-center space-x-4 p-4 rounded-2xl transition-all duration-300 hover:bg-amber-50/60 group">
-              <div className="p-4 bg-amber-100/90 rounded-2xl text-amber-800 shadow-inner group-hover:scale-110 transition-transform">
-                <Handshake size={28} />
-              </div>
-              <div>
-                <h3 className="text-3xl sm:text-4xl font-serif font-extrabold text-gray-900 tracking-tight">
-                  {countRetention}%
-                </h3>
-                <p className="text-xs sm:text-sm font-medium text-gray-500 mt-0.5">Client Retention Rate</p>
-              </div>
-            </div>
-
-          </div>
-        </section>
-
-        {/* Brand Philosophy Section */}
-       <section className="py-16 sm:py-20 px-5 sm:px-8 md:px-16 max-w-7xl mx-auto">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-10 lg:gap-14 items-center">
- 
-  <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden border border-amber-900/15 shadow-xl bg-gradient-to-br from-amber-50/80 via-white to-amber-100/40 p-5 sm:p-8 lg:p-10 flex flex-col justify-center min-h-[320px] sm:min-h-[360px] group">
+        {/* Core Highlights / Stats Bar with 4 Columns & Number Counting Animation */}
+       {/* Core Highlights / Stats Bar with Custom Images */}
+<section ref={statsRef} className="py-8 px-4 sm:px-8 md:px-16 max-w-7xl mx-auto my-2">
+  <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-8 bg-white/90 backdrop-blur-md border border-amber-900/10 rounded-3xl p-6 sm:p-8 shadow-xl shadow-amber-900/[0.03]">
     
-    {/* Background pattern */}
-    <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#b45309_1.5px,transparent_1.5px)] bg-[size:16px_16px] sm:bg-[size:20px_20px]"></div>
-    
-    {/* Badge */}
-    <div className="absolute top-4 right-4 sm:top-6 sm:right-6 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full bg-amber-800 text-white text-[9px] sm:text-[10px] font-bold tracking-widest uppercase shadow-sm">
-      Industrial Hub
-    </div>
-
-    {/* Content */}
-    <div className="relative z-10 pr-12 sm:pr-0">
-      <span className="text-[11px] sm:text-xs tracking-widest font-bold uppercase text-amber-800 mb-1.5 sm:mb-2 block">
-        Our Master Workshop
-      </span>
-      <h3 className="text-xl sm:text-2xl lg:text-3xl font-serif font-bold text-gray-900 mb-3 sm:mb-4 group-hover:text-amber-900 transition-colors">
-        Precision in Every Thread
-      </h3>
-      <p className="text-xs sm:text-sm lg:text-base text-gray-600 leading-relaxed mb-4 sm:mb-6">
-        Operating out of our state-of-the-art industrial production facility in Faisalabad, our expert craftsmen merge traditional tailoring mastery with advanced automated precision sewing technology.
-      </p>
-      
-      {/* Feature pill */}
-      <div className="flex items-center space-x-2 sm:space-x-3 text-[11px] sm:text-xs font-semibold text-amber-800 bg-amber-100/60 w-full sm:w-fit px-3.5 py-2.5 sm:px-4 sm:py-2 rounded-xl border border-amber-200/50">
-        <ShieldCheck size={15} className="shrink-0" />
-        <span className="leading-tight">ISO-Standard Quality Checked Fabric Batches</span>
+    {/* Stat 1: Years Experience */}
+    <div className="flex items-center space-x-4 p-4 rounded-2xl transition-all duration-300 hover:bg-amber-50/60 group">
+      <div className="p-2.5 bg-amber-100/90 rounded-2xl shadow-inner group-hover:scale-110 transition-transform overflow-hidden flex items-center justify-center w-14 h-14 shrink-0">
+        <img 
+          src="/images/achieve.png" 
+          alt="Experience icon" 
+          className="w-full h-full object-cover rounded-xl"
+        />
+      </div>
+      <div>
+        <h3 className="text-3xl sm:text-4xl font-serif font-extrabold text-gray-900 tracking-tight">
+          {countYears}+
+        </h3>
+        <p className="text-xs sm:text-sm font-medium text-gray-500 mt-0.5">Years Experience in Stitching</p>
       </div>
     </div>
-    
+
+    {/* Stat 2: Bulk Deliveries */}
+    <div className="flex items-center space-x-4 p-4 rounded-2xl transition-all duration-300 hover:bg-amber-50/60 group">
+      <div className="p-2.5 bg-amber-100/90 rounded-2xl shadow-inner group-hover:scale-110 transition-transform overflow-hidden flex items-center justify-center w-14 h-14 shrink-0">
+        <img 
+          src="/images/bulk.png" 
+          alt="Deliveries icon" 
+          className="w-full h-full object-cover rounded-xl"
+        />
+      </div>
+      <div>
+        <h3 className="text-3xl sm:text-4xl font-serif font-extrabold text-gray-900 tracking-tight">
+          {countDeliveries}k+
+        </h3>
+        <p className="text-xs sm:text-sm font-medium text-gray-500 mt-0.5">Bulk Uniforms Delivered</p>
+      </div>
+    </div>
+
+    {/* Stat 3: Client Retention */}
+    <div className="flex items-center space-x-4 p-4 rounded-2xl transition-all duration-300 hover:bg-amber-50/60 group">
+      <div className="p-2.5 bg-amber-100/90 rounded-2xl shadow-inner group-hover:scale-110 transition-transform overflow-hidden flex items-center justify-center w-14 h-14 shrink-0">
+        <img 
+          src="/images/retention-icon.png" 
+          alt="Retention icon" 
+          className="w-full h-full object-cover rounded-xl"
+        />
+      </div>
+      <div>
+        <h3 className="text-3xl sm:text-4xl font-serif font-extrabold text-gray-900 tracking-tight">
+          {countRetention}%
+        </h3>
+        <p className="text-xs sm:text-sm font-medium text-gray-500 mt-0.5">Client Retention Rate</p>
+      </div>
+    </div>
+
   </div>
-
-
-
-            <div className="space-y-6">
-              <div>
-                <span className="text-xs font-bold text-amber-700 tracking-widest uppercase block mb-2">Built On Trust & Excellence</span>
-                <h2 className="text-2xl sm:text-4xl font-serif font-bold text-gray-900 tracking-tight leading-snug">
-                  YOUR TEAM. YOUR BRAND. OUR CRAFT.
-                </h2>
-                <p className="text-amber-800/80 italic mt-1 text-sm font-medium">
-                  &ldquo;Experience built stitch by stitch since 1997.&rdquo;
-                </p>
-              </div>
-
-              <p className="text-gray-600 leading-relaxed text-base">
-                At Fashion Bank, we recognize that staff uniforms represent more than standard workwear—they serve as a core visual extension of your corporate identity. Our master artisans ensure absolute comfort, durability, and distinguished styling.
-              </p>
-
-              <ul className="space-y-3.5 text-sm font-medium text-gray-700 pt-2">
-                <li className="flex items-center space-x-3.5 bg-white/70 p-3 rounded-2xl border border-amber-900/5 shadow-sm">
-                  <span className="h-2 w-2 rounded-full bg-amber-700 shrink-0"></span>
-                  <span>Customized industrial fabric sourcing (fade & tear resistant weaves)</span>
-                </li>
-                <li className="flex items-center space-x-3.5 bg-white/70 p-3 rounded-2xl border border-amber-900/5 shadow-sm">
-                  <span className="h-2 w-2 rounded-full bg-amber-700 shrink-0"></span>
-                  <span>Precision automated bulk grading and sizing routines for all staff tiers</span>
-                </li>
-                <li className="flex items-center space-x-3.5 bg-white/70 p-3 rounded-2xl border border-amber-900/5 shadow-sm">
-                  <span className="h-2 w-2 rounded-full bg-amber-700 shrink-0"></span>
-                  <span>In-house high definition corporate branding, embroidery, and logo cresting</span>
-                </li>
-              </ul>
-            </div>
-
-          </div>
-        </section>
-
+</section>
         {/* INFINITE MARQUEE MOVING ANIMATION FOR CLIENT INDUSTRIES */}
         <section className="py-12 bg-amber-950/[0.02] border-y border-amber-900/10 overflow-hidden my-6">
           <div className="max-w-7xl mx-auto px-4 md:px-16 text-center mb-6">
