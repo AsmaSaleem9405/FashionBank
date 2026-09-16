@@ -58,10 +58,9 @@ export default function CollectionDetailPage({ params }) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-2 relative z-10 animate-[fadeIn_0.6s_ease-out]">
         <div className="bg-white/85 backdrop-blur-md rounded-3xl p-5 sm:p-10 shadow-sm border border-[#F0EBE1] grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-10 items-center relative transition-all duration-500 hover:shadow-md">
           
-          {/* Left Main Preview Area with Always-Visible Arrows */}
+          {/* Left Main Preview Area */}
           <div className="lg:col-span-5 relative h-[320px] sm:h-[420px] lg:h-[460px] rounded-2xl overflow-hidden shadow-md bg-stone-100 flex items-center justify-center group">
             
-            {/* Clickable Image Container */}
             <div 
               onClick={() => setFullscreenItem(activeItem)}
               className="w-full h-full cursor-pointer relative flex items-center justify-center"
@@ -99,7 +98,6 @@ export default function CollectionDetailPage({ params }) {
               )}
             </div>
 
-            {/* Left & Right Arrow Buttons (Always Visible for Mobile/Desktop) */}
             <button 
               onClick={(e) => { e.stopPropagation(); handlePrev(); }}
               className="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/90 hover:bg-white backdrop-blur-md shadow-md flex items-center justify-center text-[#2C1810] transition-all duration-300 cursor-pointer active:scale-95"
@@ -115,7 +113,6 @@ export default function CollectionDetailPage({ params }) {
               <ChevronRight className="w-5 h-5" />
             </button>
 
-            {/* Carousel Counter Badge (e.g. 1 / 5) */}
             <div className="absolute top-3 left-3 bg-black/50 backdrop-blur-md text-white text-xs font-semibold px-3 py-1 rounded-full z-20 tracking-wider">
               {activeGalleryIndex + 1} / {galleryItems.length}
             </div>
@@ -136,21 +133,25 @@ export default function CollectionDetailPage({ params }) {
               {collection.description}
             </p>
 
-            {/* Modern Get in Touch Button */}
-            <div className="pt-1">
-              <button
-                onClick={() => router.push('/#contact')}
-                className="group relative inline-flex items-center gap-3 px-8 py-3.5 rounded-full bg-gradient-to-r from-[#2C1810] to-[#4A2E21] text-white font-medium text-sm sm:text-base shadow-lg shadow-[#2C1810]/15 hover:shadow-xl hover:shadow-[#D9822B]/20 hover:from-[#D9822B] hover:to-[#C2701F] transition-all duration-300 active:scale-95 cursor-pointer overflow-hidden"
-              >
-                <span className="relative z-10 flex items-center gap-2">
-                  <span>Get in Touch</span>
-                  <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-                </span>
-                <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-              </button>
-            </div>
+            {/* Modern Get in Touch Button (Routes to Home Page Contact Section) */}
+          {/* Modern Get in Touch Button */}
+<div className="pt-1">
+  <button
+  onClick={() => {
+    sessionStorage.removeItem('returnFromCollection');
+    // Use a query parameter instead of a hash
+    router.push('/?scrollTo=contact');
+  }}
+  className="group relative inline-flex items-center gap-3 px-8 py-3.5 rounded-full bg-gradient-to-r from-[#2C1810] to-[#4A2E21] text-white font-medium text-sm sm:text-base shadow-lg shadow-[#2C1810]/15 hover:shadow-xl hover:shadow-[#D9822B]/20 hover:from-[#D9822B] hover:to-[#C2701F] transition-all duration-300 active:scale-95 cursor-pointer overflow-hidden"
+>
+  <span className="relative z-10 flex items-center gap-2">
+    <span>Get in Touch</span>
+    <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+  </span>
+  <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+</button>
+</div>
 
-            {/* Fully Responsive Feature Badges Row */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 pt-2">
               <div className="flex items-center space-x-3 bg-[#FDFBF7] p-3.5 rounded-2xl border border-[#F0EBE1] transition-transform duration-300 hover:-translate-y-1">
                 <ShieldCheck className="w-5 h-5 text-[#D9822B] shrink-0" />
@@ -241,7 +242,6 @@ export default function CollectionDetailPage({ params }) {
           </button>
         </div>
 
-        {/* Mobile Swipe Buttons Bar */}
         <div className="flex sm:hidden items-center justify-center space-x-4 mt-6">
           <button 
             onClick={handlePrev}
@@ -263,7 +263,6 @@ export default function CollectionDetailPage({ params }) {
         </div>
       </div>
 
-      {/* FULLSCREEN LIGHTBOX MODAL */}
       {fullscreenItem && (
         <div className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-3 sm:p-8 backdrop-blur-md animate-[fadeIn_0.2s_ease-out]">
           <button 

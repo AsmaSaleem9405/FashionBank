@@ -12,19 +12,32 @@ import Image from 'next/image';
 export default function Page() {
   const [isLoading, setIsLoading] = useState(true);
   const collectionsRef = useRef(null);
+  const contactRef = useRef(null);
 
   useEffect(() => {
     const hasSeenSplash = sessionStorage.getItem('hasSeenSplash');
     const returnFromCollection = sessionStorage.getItem('returnFromCollection');
 
+    // Check URL query parameters for scrolling
+    const searchParams = new URLSearchParams(window.location.search);
+    const scrollToParam = searchParams.get('scrollTo');
+
     if (hasSeenSplash) {
       setIsLoading(false);
-      // If the user came back from a collection page, scroll them down to collections automatically
+      
       if (returnFromCollection === 'true') {
-        sessionStorage.removeItem('returnFromCollection'); // clear flag
+        sessionStorage.removeItem('returnFromCollection');
         setTimeout(() => {
           collectionsRef.current?.scrollIntoView({ behavior: 'smooth' });
-        }, 100);
+        }, 150);
+      }
+
+      if (scrollToParam === 'contact') {
+        setTimeout(() => {
+          contactRef.current?.scrollIntoView({ behavior: 'smooth' });
+          // Clean up the URL query parameter without reloading the page
+          window.history.replaceState({}, document.title, window.location.pathname);
+        }, 300); // 300ms ensures components are fully rendered
       }
     } else {
       const timer = setTimeout(() => {
@@ -36,7 +49,6 @@ export default function Page() {
     }
   }, []);
 
-  // Function to call when clicking a collection item so it remembers where you were
   const handleCollectionClick = () => {
     sessionStorage.setItem('returnFromCollection', 'true');
   };
@@ -68,13 +80,18 @@ export default function Page() {
       <div className="relative z-10 min-h-screen bg-[#fdfbf7] overflow-x-hidden pt-24">
         <Hero />
         
-        {/* Wrap Collections with a ref to scroll back down here */}
+        {/* Collections with Ref */}
         <div ref={collectionsRef} onClick={handleCollectionClick}>
           <Collections />
         </div>
 
         <About />
-        <Contact />
+        
+        {/* Contact with Ref */}
+        <div ref={contactRef}>
+          <Contact />
+        </div>
+
         <Footer />
       </div>
       
