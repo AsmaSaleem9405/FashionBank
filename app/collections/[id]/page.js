@@ -3,7 +3,7 @@ import React, { useState, use } from 'react';
 import { useRouter } from 'next/navigation';
 import { 
   ArrowLeft, ShieldCheck, Scissors, 
-  Palette, Play, X, ChevronLeft, ChevronRight, Sparkles 
+  Palette, Play, X, ChevronLeft, ChevronRight, ArrowRight 
 } from 'lucide-react';
 import { collectionsData } from '../page';
 
@@ -58,47 +58,66 @@ export default function CollectionDetailPage({ params }) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-2 relative z-10 animate-[fadeIn_0.6s_ease-out]">
         <div className="bg-white/85 backdrop-blur-md rounded-3xl p-5 sm:p-10 shadow-sm border border-[#F0EBE1] grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-10 items-center relative transition-all duration-500 hover:shadow-md">
           
-          {/* Left Main Preview Area */}
-          <div 
-            onClick={() => setFullscreenItem(activeItem)}
-            className="lg:col-span-5 relative h-[320px] sm:h-[420px] lg:h-[460px] rounded-2xl overflow-hidden shadow-md bg-stone-100 flex items-center justify-center cursor-pointer group"
-          >
-            {activeItem.type === 'video' ? (
-              <div className="w-full h-full relative">
-                <video 
-                  src={activeItem.url} 
-                  muted 
-                  loop
-                  autoPlay
-                  playsInline
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-black/25 flex items-center justify-center group-hover:bg-black/35 transition-colors">
-                  <div className="w-14 h-14 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-lg transform group-hover:scale-110 group-hover:bg-white transition-all duration-300">
-                    <Play className="w-6 h-6 text-[#2C1810] fill-current ml-0.5" />
+          {/* Left Main Preview Area with Always-Visible Arrows */}
+          <div className="lg:col-span-5 relative h-[320px] sm:h-[420px] lg:h-[460px] rounded-2xl overflow-hidden shadow-md bg-stone-100 flex items-center justify-center group">
+            
+            {/* Clickable Image Container */}
+            <div 
+              onClick={() => setFullscreenItem(activeItem)}
+              className="w-full h-full cursor-pointer relative flex items-center justify-center"
+            >
+              {activeItem.type === 'video' ? (
+                <div className="w-full h-full relative">
+                  <video 
+                    src={activeItem.url} 
+                    muted 
+                    loop
+                    autoPlay
+                    playsInline
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-black/25 flex items-center justify-center group-hover:bg-black/35 transition-colors">
+                    <div className="w-14 h-14 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-lg transform group-hover:scale-110 group-hover:bg-white transition-all duration-300">
+                      <Play className="w-6 h-6 text-[#2C1810] fill-current ml-0.5" />
+                    </div>
                   </div>
                 </div>
-              </div>
-            ) : (
-              <>
-                <img 
-                  key={activeItem.url}
-                  src={activeItem.url} 
-                  alt={collection.title}
-                  className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105 animate-[fadeIn_0.4s_ease-in-out]"
-                />
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
-                  <span className="opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 bg-white/95 text-[#2C1810] text-xs font-bold px-4 py-2 rounded-full shadow-lg transition-all duration-300">
-                    Tap to Expand Fullscreen
-                  </span>
-                </div>
-              </>
-            )}
+              ) : (
+                <>
+                  <img 
+                    key={activeItem.url}
+                    src={activeItem.url} 
+                    alt={collection.title}
+                    className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105 animate-[fadeIn_0.4s_ease-in-out]"
+                  />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
+                    <span className="opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 bg-white/95 text-[#2C1810] text-xs font-bold px-4 py-2 rounded-full shadow-lg transition-all duration-300">
+                      Tap to Expand Fullscreen
+                    </span>
+                  </div>
+                </>
+              )}
+            </div>
 
-            {/* Swipe/Badge indicator tag */}
-            <div className="absolute top-3 left-3 bg-black/40 backdrop-blur-md text-white text-[10px] sm:text-xs font-medium px-2.5 py-1 rounded-full flex items-center space-x-1">
-              <Sparkles className="w-3 h-3 text-[#F5B85E]" />
-              <span>{activeGalleryIndex + 1} / {galleryItems.length}</span>
+            {/* Left & Right Arrow Buttons (Always Visible for Mobile/Desktop) */}
+            <button 
+              onClick={(e) => { e.stopPropagation(); handlePrev(); }}
+              className="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/90 hover:bg-white backdrop-blur-md shadow-md flex items-center justify-center text-[#2C1810] transition-all duration-300 cursor-pointer active:scale-95"
+              aria-label="Previous item"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+            <button 
+              onClick={(e) => { e.stopPropagation(); handleNext(); }}
+              className="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/90 hover:bg-white backdrop-blur-md shadow-md flex items-center justify-center text-[#2C1810] transition-all duration-300 cursor-pointer active:scale-95"
+              aria-label="Next item"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
+
+            {/* Carousel Counter Badge (e.g. 1 / 5) */}
+            <div className="absolute top-3 left-3 bg-black/50 backdrop-blur-md text-white text-xs font-semibold px-3 py-1 rounded-full z-20 tracking-wider">
+              {activeGalleryIndex + 1} / {galleryItems.length}
             </div>
           </div>
 
@@ -117,7 +136,21 @@ export default function CollectionDetailPage({ params }) {
               {collection.description}
             </p>
 
-            {/* Fully Responsive Feature Badges Row (Stacked on mobile, 3-col on tablets/desktop) */}
+            {/* Modern Get in Touch Button */}
+            <div className="pt-1">
+              <button
+                onClick={() => router.push('/#contact')}
+                className="group relative inline-flex items-center gap-3 px-8 py-3.5 rounded-full bg-gradient-to-r from-[#2C1810] to-[#4A2E21] text-white font-medium text-sm sm:text-base shadow-lg shadow-[#2C1810]/15 hover:shadow-xl hover:shadow-[#D9822B]/20 hover:from-[#D9822B] hover:to-[#C2701F] transition-all duration-300 active:scale-95 cursor-pointer overflow-hidden"
+              >
+                <span className="relative z-10 flex items-center gap-2">
+                  <span>Get in Touch</span>
+                  <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                </span>
+                <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              </button>
+            </div>
+
+            {/* Fully Responsive Feature Badges Row */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 pt-2">
               <div className="flex items-center space-x-3 bg-[#FDFBF7] p-3.5 rounded-2xl border border-[#F0EBE1] transition-transform duration-300 hover:-translate-y-1">
                 <ShieldCheck className="w-5 h-5 text-[#D9822B] shrink-0" />
@@ -167,7 +200,10 @@ export default function CollectionDetailPage({ params }) {
             {galleryItems.map((item, idx) => (
               <div 
                 key={idx}
-                onClick={() => setActiveGalleryIndex(idx)}
+                onClick={() => {
+                  setActiveGalleryIndex(idx);
+                  setFullscreenItem(item);
+                }}
                 className={`relative h-48 sm:h-72 rounded-2xl overflow-hidden cursor-pointer border-2 transition-all duration-300 bg-stone-100 group/thumb active:scale-95 ${
                   activeGalleryIndex === idx 
                     ? 'border-[#D9822B] shadow-lg ring-2 ring-[#D9822B]/20 scale-[1.02]' 
