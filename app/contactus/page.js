@@ -1,3 +1,4 @@
+'use client';
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Send, Image as ImageIcon } from 'lucide-react';
