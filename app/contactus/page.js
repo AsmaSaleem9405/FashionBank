@@ -232,27 +232,31 @@ export default function ContactPage() {
               </motion.a>
 
               {/* Email Link */}
-           <motion.a
-                whileHover={{ scale: 1.02, x: 4 }}
-                transition={{ type: "spring", stiffness: 300 }}
-                href="mailto:Fashionbankstitching@gmail.com"
-                className="flex items-center space-x-4 p-3.5 sm:p-4 rounded-xl border border-gray-200 hover:border-amber-300 hover:bg-amber-50/50 transition-all group overflow-hidden"
-              >
-                <div className="w-10 h-10 rounded-full bg-amber-50 flex items-center justify-center border border-amber-200 flex-shrink-0 group-hover:scale-110 transition-transform overflow-hidden">
-                  <img 
-                    src="/images/mail.png" 
-                    alt="Email" 
-                    className="w-full h-full object-cover"
-                    onError={(e) => { e.currentTarget.style.display = 'none'; }} 
-                  />
-                </div>
-                <div className="min-w-0">
-                  <h3 className="text-xs font-semibold uppercase tracking-wider text-gray-400">Email Us</h3>
-                  <span className="text-gray-900 font-medium text-xs sm:text-sm truncate block transition-all duration-300 group-hover:text-amber-700 group-hover:underline">
-                    Fashionbankstitching@gmail.com
-                  </span>
-                </div>
-              </motion.a>
+         <motion.a
+  href="mailto:Fashionbankstitching@gmail.com"
+  onClick={(e) => {
+    e.preventDefault();
+    window.open("https://mail.google.com/mail/?extsrc=mailto&url=mailto:Fashionbankstitching@gmail.com", "_blank", "noopener,noreferrer");
+  }}
+  whileHover={{ scale: 1.02, x: 4 }}
+  transition={{ type: "spring", stiffness: 300 }}
+  className="flex items-center space-x-4 p-3.5 sm:p-4 rounded-xl border border-gray-200 hover:border-amber-300 hover:bg-amber-50/50 transition-all group overflow-hidden cursor-pointer"
+>
+  <div className="w-10 h-10 rounded-full bg-amber-50 flex items-center justify-center border border-amber-200 flex-shrink-0 group-hover:scale-110 transition-transform overflow-hidden">
+    <img 
+      src="/images/mail.png" 
+      alt="Email" 
+      className="w-full h-full object-cover"
+      onError={(e) => { e.currentTarget.style.display = 'none'; }} 
+    />
+  </div>
+  <div className="min-w-0">
+    <h3 className="text-xs font-semibold uppercase tracking-wider text-gray-400">Email Us</h3>
+    <span className="text-gray-900 font-medium text-xs sm:text-sm truncate block transition-all duration-300 group-hover:text-amber-700 group-hover:underline">
+      Fashionbankstitching@gmail.com
+    </span>
+  </div>
+</motion.a>
            
               {/* Instagram Custom Image Icon Link */}
               <motion.a
