@@ -1,8 +1,6 @@
-'use client';
-
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { MessageCircle, Mail, Send } from 'lucide-react';
+import { Mail, Send, Image as ImageIcon } from 'lucide-react';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -189,7 +187,7 @@ export default function ContactPage() {
             </form>
           </motion.div>
 
-          {/* Right Side: Unified Direct Channels & Workshop Card */}
+          {/* Right Side: Direct Channels & Workshop Card using Custom Gallery Images */}
           <motion.div 
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
@@ -201,13 +199,13 @@ export default function ContactPage() {
                 Direct Channels
               </h2>
               <p className="text-gray-600 text-sm leading-relaxed">
-                You can also connect with us instantly through our official handles or phone lines below:
+                Connect instantly through our verified channels and gallery assets below:
               </p>
             </div>
 
             <div className="space-y-3 sm:space-y-4">
               
-              {/* WhatsApp Link */}
+              {/* WhatsApp Custom Image Icon Link */}
               <motion.a
                 whileHover={{ scale: 1.02, x: 4 }}
                 transition={{ type: "spring", stiffness: 300 }}
@@ -216,8 +214,16 @@ export default function ContactPage() {
                 rel="noopener noreferrer"
                 className="flex items-center space-x-4 p-3.5 sm:p-4 rounded-xl border border-gray-200 hover:border-amber-300 hover:bg-amber-50/50 transition-all group"
               >
-                <div className="p-3 bg-emerald-100 rounded-full text-emerald-700 group-hover:scale-110 transition-transform">
-                  <MessageCircle size={20} />
+                <div className="w-10 h-10 rounded-full bg-emerald-50 flex items-center justify-center overflow-hidden border border-emerald-200 flex-shrink-0 group-hover:scale-110 transition-transform">
+                  <img 
+                    src="/images/whatsapp.png" 
+                    alt="WhatsApp" 
+                    className="w-6 h-6 object-contain"
+                    onError={(e) => {
+                      // Fallback placeholder if local image is missing
+                      e.target.src = "https://placehold.co/40x40/22c55e/ffffff?text=WA";
+                    }}
+                  />
                 </div>
                 <div>
                   <h3 className="text-xs font-semibold uppercase tracking-wider text-gray-400">WhatsApp</h3>
@@ -226,14 +232,19 @@ export default function ContactPage() {
               </motion.a>
 
               {/* Email Link */}
-              <motion.a
+           <motion.a
                 whileHover={{ scale: 1.02, x: 4 }}
                 transition={{ type: "spring", stiffness: 300 }}
                 href="mailto:Fashionbankstitching@gmail.com"
                 className="flex items-center space-x-4 p-3.5 sm:p-4 rounded-xl border border-gray-200 hover:border-amber-300 hover:bg-amber-50/50 transition-all group overflow-hidden"
               >
-                <div className="p-3 bg-amber-100 rounded-full text-amber-700 group-hover:scale-110 transition-transform flex-shrink-0">
-                  <Mail size={20} />
+                <div className="w-10 h-10 rounded-full bg-amber-50 flex items-center justify-center border border-amber-200 flex-shrink-0 group-hover:scale-110 transition-transform overflow-hidden">
+                  <img 
+                    src="/images/mail.png" 
+                    alt="Email" 
+                    className="w-full h-full object-cover"
+                    onError={(e) => { e.currentTarget.style.display = 'none'; }} 
+                  />
                 </div>
                 <div className="min-w-0">
                   <h3 className="text-xs font-semibold uppercase tracking-wider text-gray-400">Email Us</h3>
@@ -242,8 +253,8 @@ export default function ContactPage() {
                   </span>
                 </div>
               </motion.a>
-
-              {/* Instagram Link */}
+           
+              {/* Instagram Custom Image Icon Link */}
               <motion.a
                 whileHover={{ scale: 1.02, x: 4 }}
                 transition={{ type: "spring", stiffness: 300 }}
@@ -252,12 +263,15 @@ export default function ContactPage() {
                 rel="noopener noreferrer"
                 className="flex items-center space-x-4 p-3.5 sm:p-4 rounded-xl border border-gray-200 hover:border-amber-300 hover:bg-amber-50/50 transition-all group"
               >
-                <div className="p-3 bg-pink-100 rounded-full text-pink-700 group-hover:scale-110 transition-transform flex items-center justify-center">
-                  <svg className="w-5 h-5 fill-none stroke-current stroke-2" viewBox="0 0 24 24">
-                    <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
-                    <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"></path>
-                    <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line>
-                  </svg>
+                <div className="w-10 h-10 rounded-full bg-pink-50 flex items-center justify-center overflow-hidden border border-pink-200 flex-shrink-0 group-hover:scale-110 transition-transform">
+                  <img 
+                    src="/images/instagram.png" 
+                    alt="Instagram" 
+                    className="w-6 h-6 object-contain"
+                    onError={(e) => {
+                      e.target.src = "https://placehold.co/40x40/db2777/ffffff?text=IG";
+                    }}
+                  />
                 </div>
                 <div>
                   <h3 className="text-xs font-semibold uppercase tracking-wider text-gray-400">Instagram</h3>
@@ -265,7 +279,7 @@ export default function ContactPage() {
                 </div>
               </motion.a>
 
-              {/* Facebook Link */}
+              {/* Facebook Custom Image Icon Link */}
               <motion.a
                 whileHover={{ scale: 1.02, x: 4 }}
                 transition={{ type: "spring", stiffness: 300 }}
@@ -274,10 +288,15 @@ export default function ContactPage() {
                 rel="noopener noreferrer"
                 className="flex items-center space-x-4 p-3.5 sm:p-4 rounded-xl border border-gray-200 hover:border-amber-300 hover:bg-amber-50/50 transition-all group"
               >
-                <div className="p-3 bg-blue-100 rounded-full text-blue-700 group-hover:scale-110 transition-transform flex items-center justify-center">
-                  <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                    <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>
-                  </svg>
+                <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center overflow-hidden border border-blue-200 flex-shrink-0 group-hover:scale-110 transition-transform">
+                  <img 
+                    src="/images/fb.png" 
+                    alt="Facebook" 
+                    className="w-6 h-6 object-contain"
+                    onError={(e) => {
+                      e.target.src = "https://placehold.co/40x40/2563eb/ffffff?text=FB";
+                    }}
+                  />
                 </div>
                 <div>
                   <h3 className="text-xs font-semibold uppercase tracking-wider text-gray-400">Facebook</h3>
